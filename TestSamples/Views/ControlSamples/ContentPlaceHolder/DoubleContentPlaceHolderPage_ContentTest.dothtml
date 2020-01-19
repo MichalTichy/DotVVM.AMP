@@ -1,0 +1,15 @@
+﻿@viewModel TestSamples.ViewModels.ControlSamples.ContentPlaceHolder.DoubleContentPlaceHolderPage_ContentTestViewModel, TestSamples
+@masterPage Views/ControlSamples/ContentPlaceHolder/DoubleContentPlaceHolderMasterPage.dotmaster
+
+<dot:Content ContentPlaceHolderID="TitleContent">
+    <span data-ui="title"> Title</span>
+</dot:Content>
+<dot:Content ContentPlaceHolderID="MainContent">
+    <div RenderSettings.Mode="Server">
+
+        <span data-ui="content"> Content</span>
+        <dot:Literal FormatString="G" Text="{value:  Date}" />
+        <span data-ui="innerText" InnerText="{value: Date}"></span>
+    </div>
+</dot:Content>
+

@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="**/*.dothtml;**/*.dotmaster;**/*.dotcontrol" Exclude="obj/**/*.*;bin/**/*.*" CopyToPublishDirectory="Always" />
+    <None Remove="**/*.dothtml;**/*.dotmaster;**/*.dotcontrol" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="dotvvm_serialized_config.json.tmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\AmpPages\ContentPlaceHolder\ContentPlaceHolderPage.html" />
+    <None Include="wwwroot\AmpPages\ContentPlaceHolder\ContentPlaceHolderPage_ContentTest.html" />
+    <None Include="wwwroot\AmpPages\ContentPlaceHolder\DoubleContentPlaceHolderPage_ContentTest.html" />
+    <None Include="wwwroot\AmpPages\GridView\GridViewServerRender.html" />
+    <None Include="wwwroot\AmpPages\HtmlLiteral\HtmlLiteral.html" />
+    <None Include="wwwroot\AmpPages\Literal\Literal.html" />
+    <None Include="wwwroot\AmpPages\Repeater\NamedTemplate.html" />
+    <None Include="wwwroot\AmpPages\Repeater\NestedRepeater.html" />
+    <None Include="wwwroot\AmpPages\Repeater\RepeaterWrapperTag.html" />
+    <None Include="wwwroot\AmpPages\Repeater\Separator.html" />
+    <None Include="wwwroot\AmpPages\RouteLink\RouteLinkUrlGen.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="DotVVM.AspNetCore" Version="2.4.0-preview01-final" />
+
+  </ItemGroup>
+</Project>

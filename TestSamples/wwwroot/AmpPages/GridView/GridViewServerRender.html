@@ -1,0 +1,128 @@
+﻿<!doctype html>
+<html amp lang="en">
+<head>
+    <meta charset="utf-8">
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+    <title>Hello from DotVVM!</title>
+    <link rel="canonical" href="https://amp.dev/documentation/guides-and-tutorials/start/create/basic_markup/">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <script type="application/ld+json">
+        {
+        "@context": "http://schema.org",
+        "@type": "NewsArticle",
+        "headline": "Open-source framework for publishing content",
+        "datePublished": "2015-10-07T12:02:41Z",
+        "image": [
+        "logo.jpg"
+        ]
+        }
+    </script>
+    <style amp-boilerplate>
+        body {
+            -webkit-animation: -amp-start 8s steps(1,end) 0s 1 normal both;
+            -moz-animation: -amp-start 8s steps(1,end) 0s 1 normal both;
+            -ms-animation: -amp-start 8s steps(1,end) 0s 1 normal both;
+            animation: -amp-start 8s steps(1,end) 0s 1 normal both
+        }
+
+        @-webkit-keyframes -amp-start {
+            from {
+                visibility: hidden
+            }
+
+            to {
+                visibility: visible
+            }
+        }
+
+        @-moz-keyframes -amp-start {
+            from {
+                visibility: hidden
+            }
+
+            to {
+                visibility: visible
+            }
+        }
+
+        @-ms-keyframes -amp-start {
+            from {
+                visibility: hidden
+            }
+
+            to {
+                visibility: visible
+            }
+        }
+
+        @-o-keyframes -amp-start {
+            from {
+                visibility: hidden
+            }
+
+            to {
+                visibility: visible
+            }
+        }
+
+        @keyframes -amp-start {
+            from {
+                visibility: hidden
+            }
+
+            to {
+                visibility: visible
+            }
+        }
+    </style>
+    <noscript>
+        <style amp-boilerplate>
+            body {
+                -webkit-animation: none;
+                -moz-animation: none;
+                -ms-animation: none;
+                animation: none
+            }
+        </style>
+    </noscript>
+</head>
+<body>
+    <div class="container">
+        <h1>GridView with IGridViewDataSet</h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th><span>Id</span></th>
+                    <th><span>Name</span></th>
+                    <th>
+                        <span class="class123">Birth date</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody><tr><td><span>1</span></td><td><span>John Doe</span></td><td><span>4/1/1976 12:00 AM</span></td></tr><tr><td><span>2</span></td><td><span>John Deer</span></td><td><span>3/2/1984 12:00 AM</span></td></tr><tr><td><span>3</span></td><td><span>Johnny Walker</span></td><td><span>1/3/1934 12:00 AM</span></td></tr><tr><td><span>4</span></td><td><span>Jim Hacker</span></td><td><span>11/4/1912 12:00 AM</span></td></tr><tr><td><span>5</span></td><td><span>Joe E. Brown</span></td><td><span>9/5/1947 12:00 AM</span></td></tr><tr><td><span>6</span></td><td><span>Jim Harris</span></td><td><span>7/6/1956 12:00 AM</span></td></tr><tr><td><span>7</span></td><td><span>J. P. Morgan</span></td><td><span>5/7/1969 12:00 AM</span></td></tr><tr><td><span>8</span></td><td><span>J. R. Ewing</span></td><td><span>3/8/1987 12:00 AM</span></td></tr><tr><td><span>9</span></td><td><span>Jeremy Clarkson</span></td><td><span>4/9/1994 12:00 AM</span></td></tr><tr><td><span>10</span></td><td><span>Jenny Green</span></td><td><span>2/10/1947 12:00 AM</span></td></tr></tbody>
+        </table>
+        <!-- comment outside control -->
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+
+        <h1>GridView with simple collection</h1>
+        <table class="table table-bordered"><thead><tr><th><span>Id</span></th><th><span>Name</span></th><th><span>Birth Date</span></th></tr></thead><tbody><tr><td><span>1</span></td><td><span>John Doe</span></td><td><span>4/1/1976 12:00 AM</span></td></tr><tr><td><span>2</span></td><td><span>John Deer</span></td><td><span>3/2/1984 12:00 AM</span></td></tr><tr><td><span>3</span></td><td><span>Johnny Walker</span></td><td><span>1/3/1934 12:00 AM</span></td></tr><tr><td><span>4</span></td><td><span>Jim Hacker</span></td><td><span>11/4/1912 12:00 AM</span></td></tr><tr><td><span>5</span></td><td><span>Joe E. Brown</span></td><td><span>9/5/1947 12:00 AM</span></td></tr><tr><td><span>6</span></td><td><span>Jim Harris</span></td><td><span>7/6/1956 12:00 AM</span></td></tr><tr><td><span>7</span></td><td><span>J. P. Morgan</span></td><td><span>5/7/1969 12:00 AM</span></td></tr><tr><td><span>8</span></td><td><span>J. R. Ewing</span></td><td><span>3/8/1987 12:00 AM</span></td></tr><tr><td><span>9</span></td><td><span>Jeremy Clarkson</span></td><td><span>4/9/1994 12:00 AM</span></td></tr><tr><td><span>10</span></td><td><span>Jenny Green</span></td><td><span>2/10/1947 12:00 AM</span></td></tr><tr><td><span>11</span></td><td><span>Joseph Blue</span></td><td><span>12/11/1948 12:00 AM</span></td></tr><tr><td><span>12</span></td><td><span>Jack Daniels</span></td><td><span>10/12/1968 12:00 AM</span></td></tr><tr><td><span>13</span></td><td><span>Jackie Chan</span></td><td><span>8/13/1978 12:00 AM</span></td></tr><tr><td><span>14</span></td><td><span>Jasper</span></td><td><span>6/14/1934 12:00 AM</span></td></tr><tr><td><span>15</span></td><td><span>Jumbo</span></td><td><span>6/15/1965 12:00 AM</span></td></tr><tr><td><span>16</span></td><td><span>Junkie Doodle</span></td><td><span>5/16/1977 12:00 AM</span></td></tr></tbody></table>
+
+        <h1>GridView with null DataSource</h1>
+
+
+
+        <h1>EmptyData with data source</h1>
+
+        <h1>EmptyData with no data source</h1>
+        <div>
+            This is displayed because data is empty
+        </div>
+
+        <h1>GridView with empty dataset and ShowHeaderWhenNoData true</h1>
+        <table data-ui="ShowHeaderWhenNoDataGrid" class="table table-bordered"><thead><tr><th><span>Id</span></th><th><span>Name</span></th><th><span>Birth date</span></th></tr></thead><tbody></tbody></table>
+
+    </div>
+</body>
+</html>

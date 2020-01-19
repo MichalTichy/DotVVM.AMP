@@ -1,0 +1,30 @@
+﻿@viewModel TestSamples.ViewModels.ControlSamples.RouteLink.RouteLinkUrlGenViewModel
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Hello from DotVVM!</title>
+    <style>
+        .invalid {
+            color: red;
+        }
+    </style>
+    <dot:RequiredResource Name="globalize:cs-CZ" />
+</head>
+<body>
+    <div class="container">
+        <h1>RouteLink url generation demo</h1>
+        <p>
+            <dot:RouteLink RouteName="Default" Text="Server rendered: 0 parameters" data-ui="0-parameters-server" RenderSettings.Mode="Server" />
+        </p>
+        <p>
+            <dot:RouteLink RenderSettings.Mode="Server" RouteName="TestRoute"
+                           Text="Optional parameter missing" data-ui="optional-parameter-prefixed-server" />
+        </p>
+        <p>
+            <dot:RouteLink RenderSettings.Mode="Server" Param-Id="1" RouteName="TestRoute"
+                           Text="Optional parameter present" data-ui="optional-parameter-prefixed-server" />
+        </p>
+    </div>
+</body>
+</html>
