@@ -1,4 +1,5 @@
-﻿using DotVVM.Framework.Configuration;
+﻿using DotVVM.AMP;
+using DotVVM.Framework.Configuration;
 using DotVVM.Framework.ResourceManagement;
 using DotVVM.Framework.Routing;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,7 +20,8 @@ namespace TestSamples
         {
             config.RouteTable.Add("Default", "", "Views/Default.dothtml");
             config.RouteTable.Add("TestRoute", "ControlSamples/RouteLink/TestRoute/{Id}", "Views/ControlSamples/RouteLink/TestRoute.dothtml", new { Id = 0 });
-            config.RouteTable.AutoDiscoverRoutes(new DefaultRouteStrategy(config));
+
+            config.RouteTable.AddWithAmp("empty", "empty", "Views/SimplePages/Empty.dothtml");
         }
 
         private void ConfigureControls(DotvvmConfiguration config, string applicationPath)
@@ -34,6 +36,7 @@ namespace TestSamples
 
         public void ConfigureServices(IDotvvmServiceCollection options)
         {
+            options.AddDotvvmAmpSupport();
             options.AddDefaultTempStorages("temp");
         }
     }
