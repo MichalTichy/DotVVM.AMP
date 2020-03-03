@@ -1,6 +1,6 @@
 ﻿using DotVVM.Framework.Hosting;
 
-namespace DotVVM.AMP
+namespace DotVVM.AMP.Presenter
 {
     public interface IAmpPresenter : IDotvvmPresenter
     {

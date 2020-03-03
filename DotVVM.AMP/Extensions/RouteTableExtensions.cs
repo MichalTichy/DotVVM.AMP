@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
+using DotVVM.AMP.Presenter;
+using DotVVM.AMP.Routing;
 using DotVVM.Framework.Hosting;
 using DotVVM.Framework.Routing;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DotVVM.AMP
+namespace DotVVM.AMP.Extensions
 {
     public static class RouteTableExtensions
     {

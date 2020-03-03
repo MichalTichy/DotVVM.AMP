@@ -1,4 +1,4 @@
-﻿namespace DotVVM.AMP
+﻿namespace DotVVM.AMP.Routing
 {
     public interface IAmpRouteBuilder
     {

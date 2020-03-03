@@ -1,4 +1,5 @@
 ﻿using DotVVM.AMP;
+using DotVVM.AMP.Extensions;
 using DotVVM.Framework.Configuration;
 using DotVVM.Framework.ResourceManagement;
 using DotVVM.Framework.Routing;
