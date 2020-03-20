@@ -8,6 +8,7 @@ using DotVVM.AMP.Validator;
 using DotVVM.AMP.ViewBuilder;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using Microsoft.Extensions.Logging;
 
 namespace DotVVM.AMP.Extensions
 {
@@ -26,17 +27,18 @@ namespace DotVVM.AMP.Extensions
             {
                 var registry = provider.GetService<IAmpControlTransformsRegistry>();
                 var routeManager = provider.GetService<IAmpRouteManager>();
+                var logger = provider.GetService<ILogger>();
                 var config = new DotvvmAmpConfiguration(registry, routeManager);
-                RegisterTransforms(config);
+                RegisterTransforms(config, logger);
                 modifyConfiguration?.Invoke(config);
                 return config;
             });
         }
 
-        private static void RegisterTransforms(DotvvmAmpConfiguration configuration)
+        private static void RegisterTransforms(DotvvmAmpConfiguration configuration, ILogger logger)
         {
-            configuration.ControlTransforms.Register(new HtmlTagTransform());
-            configuration.ControlTransforms.Register(new HeadTagTransform(configuration.AmpRouteManager));
+            configuration.ControlTransforms.Register(new HtmlTagTransform(configuration, logger));
+            configuration.ControlTransforms.Register(new HeadTagTransform(configuration, logger));
         }
     }
 }
