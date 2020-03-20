@@ -50,5 +50,19 @@ namespace UiTests
                 AssertUI.JsPropertyInnerHtmlEquals(cssBoilerplateNoScript, $"<style amp-boilerplate>{AmpBoilerPlaceCssResource.BoilerPlateCodeNoScript}</style>");
             });
         }
+        [Fact]
+        public void HeadDoesHaveJsBoilerPlate()
+        {
+            RunInAllBrowsers(SampleUrl, wrapper =>
+            {
+                var headScripts = wrapper.FindElements("head > script", By.CssSelector);
+                var boilerPlate = headScripts.SingleOrDefault(t =>
+                    t.HasAttribute("async") &&
+                    (t.GetAttribute("src")?.Equals("https://cdn.ampproject.org/v0.js") ?? false) &&
+                    (t.GetAttribute("type")?.Equals("text/javascript") ?? false));
+
+                Assert.True(boilerPlate != null, "Unable to find amp js boilerplate. Ensure that head contains script with correct src and type");
+            });
+        }
     }
 }
