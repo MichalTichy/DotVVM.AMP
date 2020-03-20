@@ -1,9 +1,11 @@
 ﻿using DotVVM.AMP;
+using DotVVM.AMP.Enums;
 using DotVVM.AMP.Extensions;
 using DotVVM.Framework.Configuration;
 using DotVVM.Framework.ResourceManagement;
 using DotVVM.Framework.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace TestSamples
 {
@@ -37,7 +39,10 @@ namespace TestSamples
 
         public void ConfigureServices(IDotvvmServiceCollection options)
         {
-            options.AddDotvvmAmpSupport();
+            options.AddDotvvmAmpSupport(config =>
+                {
+                    config.AttributeErrorHandlingMode = ErrorHandlingMode.LogAndIgnore;
+                });
             options.AddDefaultTempStorages("temp");
         }
     }

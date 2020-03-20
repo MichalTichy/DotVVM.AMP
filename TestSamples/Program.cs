@@ -19,6 +19,11 @@ namespace TestSamples
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .ConfigureLogging(builder =>
+                {
+                    builder.ClearProviders();
+                    builder.AddConsole();
+                })
                 .ConfigureLogging((context, builder) =>
                 {
                     builder.AddConsole();

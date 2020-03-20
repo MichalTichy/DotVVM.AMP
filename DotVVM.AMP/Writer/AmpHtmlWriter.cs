@@ -1,73 +1,94 @@
-﻿using DotVVM.AMP.Config;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using DotVVM.AMP.Config;
 using DotVVM.AMP.Enums;
+using DotVVM.AMP.Validator;
 using DotVVM.Framework.Controls;
+using DotVVM.Framework.Hosting;
 
 namespace DotVVM.AMP.Writer
 {
-    public class AmpHtmlWriter : IHtmlWriter
+    public class AmpHtmlWriter : IAmpHtmlWriter
     {
-        private IHtmlWriter writer;
-        private readonly DotvvmAmpConfig ampConfig;
+        protected IHtmlWriter writer;
+        protected readonly DotvvmAmpConfig ampConfig;
+        protected readonly IAmpValidator validator;
 
-        public AmpHtmlWriter(IHtmlWriter writer, DotvvmAmpConfig ampConfig)
+        public AmpHtmlWriter(DotvvmAmpConfig config, StreamWriter textWriter, IDotvvmRequestContext context, IAmpValidator validator)
         {
-            this.writer = writer;
-            this.ampConfig = ampConfig;
+            writer = new HtmlWriter(textWriter, context);
+            this.ampConfig = config;
+            this.validator = validator;
         }
 
-        public void AddAttribute(string name, string value, bool append = false, string appendSeparator = null)
+        public virtual void AddAttribute(string name, string value, bool append = false, string appendSeparator = null)
         {
-            writer.AddAttribute(name, value, append, appendSeparator);
+            if (validator.CheckAttribute(name, value))
+            {
+                writer.AddAttribute(name, value, append, appendSeparator);
+            }
         }
 
-        public void AddStyleAttribute(string name, string value)
+        public virtual void AddStyleAttribute(string name, string value)
         {
-            writer.AddStyleAttribute(name, value);
+            if (validator.CheckStyleAttribute(name, value))
+            {
+                writer.AddStyleAttribute(name, value);
+            }
         }
 
-        public void AddKnockoutDataBind(string name, string expression)
+        public virtual void AddKnockoutDataBind(string name, string expression)
         {
-            if (ampConfig.ErrorHandlingMode == ErrorHandlingMode.Throw)
-                throw new DotvvmControlException("Control tried to use knockout dataBind, which is unsupported during amp rendering.");
+            if (validator.ValidateKnockoutDataBind(name))
+                writer.AddKnockoutDataBind(name, expression); // this should never happen because knockout bindings are invalid in AMP
         }
 
-        public void AddKnockoutDataBind(string name, KnockoutBindingGroup bindingGroup)
+        public virtual void AddKnockoutDataBind(string name, KnockoutBindingGroup bindingGroup)
         {
-            if (ampConfig.ErrorHandlingMode == ErrorHandlingMode.Throw)
-                throw new DotvvmControlException("Control tried to use knockout dataBind, which is unsupported during amp rendering.");
+            if (validator.ValidateKnockoutDataBind(name))
+                writer.AddKnockoutDataBind(name, bindingGroup); // this should never happen because knockout bindings are invalid in AMP
         }
 
-        public void RenderBeginTag(string name)
+        public virtual void RenderBeginTag(string name)
         {
+            //tags are not validated, because all invalid tags should be replaced by their amp alternatives by now
             writer.RenderBeginTag(name);
         }
 
-        public void RenderSelfClosingTag(string name)
+        public virtual void RenderSelfClosingTag(string name)
         {
+            //tags are not validated, because all invalid tags should be replaced by their amp alternatives by now
             writer.RenderSelfClosingTag(name);
         }
 
-        public void RenderEndTag()
+        public virtual void RenderEndTag()
         {
+            //tags are not validated, because all invalid tags should be replaced by their amp alternatives by now
             writer.RenderEndTag();
         }
 
-        public void WriteText(string text)
+        public virtual void WriteText(string text)
         {
             writer.WriteText(text);
         }
 
-        public void WriteUnencodedText(string text)
+        public virtual void WriteUnencodedText(string text)
         {
             writer.WriteUnencodedText(text);
         }
 
-        public void WriteHtmlAttribute(string attributeName, string attributeValue)
+        public virtual void WriteHtmlAttribute(string name, string value)
         {
-            writer.WriteHtmlAttribute(attributeName, attributeValue);
+            if (validator.CheckAttribute(name, value))
+            {
+                writer.WriteHtmlAttribute(name, value);
+            }
         }
 
-        public void SetErrorContext(DotvvmBindableObject obj)
+        public virtual void SetErrorContext(DotvvmBindableObject obj)
         {
             writer.SetErrorContext(obj);
         }

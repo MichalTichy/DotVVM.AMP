@@ -3,7 +3,8 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using DotVVM.AMP.Config;
-using DotVVM.AMP.Renderers.RenderStrategies;
+using DotVVM.AMP.Validator;
+using DotVVM.AMP.Writer;
 using DotVVM.Framework.Controls;
 using DotVVM.Framework.Controls.Infrastructure;
 using DotVVM.Framework.Hosting;
@@ -13,23 +14,29 @@ namespace DotVVM.AMP.Renderers
 {
     public class AmpOutputRenderer : DefaultOutputRenderer, IAmpOutputRenderer
     {
-        private readonly IAmpRenderStrategiesRegistry strategiesRegistry;
+        private readonly DotvvmAmpConfig config;
+        private readonly IAmpValidator validator;
 
-        public AmpOutputRenderer(DotvvmAmpConfig config)
+        public AmpOutputRenderer(DotvvmAmpConfig config, IAmpValidator validator)
         {
-            strategiesRegistry = config.RenderStrategiesRegistry;
+            this.config = config;
+            this.validator = validator;
         }
         protected override MemoryStream RenderPage(IDotvvmRequestContext context, DotvvmView view)
         {
             var outStream = new MemoryStream();
             using (var textWriter = new StreamWriter(outStream, Encoding.UTF8, 4096, leaveOpen: true))
             {
-                var htmlWriter = new HtmlWriter(textWriter, context);
-                var strategy = strategiesRegistry.GetRenderStrategy(view);
-                strategy.Render(view, htmlWriter, context);
+                var htmlWriter = CreateAmpHtmlWriter(context, textWriter);
+                view.Render(htmlWriter, context);
             }
             outStream.Position = 0;
             return outStream;
+        }
+
+        protected virtual AmpHtmlWriter CreateAmpHtmlWriter(IDotvvmRequestContext context, StreamWriter textWriter)
+        {
+            return new AmpHtmlWriter(config, textWriter, context, validator);
         }
 
         public override async Task WriteViewModelResponse(IDotvvmRequestContext context, DotvvmView view)
