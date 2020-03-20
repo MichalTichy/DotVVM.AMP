@@ -1,5 +1,7 @@
-﻿using DotVVM.Framework.Controls;
+﻿using DotVVM.AMP.Routing;
+using DotVVM.Framework.Controls;
 using DotVVM.Framework.Hosting;
+using DotVVM.Framework.Routing;
 
 namespace DotVVM.AMP.AmpControls
 {
@@ -18,9 +20,11 @@ namespace DotVVM.AMP.AmpControls
 
     public class AmpHead : HtmlGenericControl, IAmpControl
     {
-        public AmpHead() : base("head")
-        {
+        private readonly IAmpRouteManager ampRouteManager;
 
+        public AmpHead(IAmpRouteManager ampRouteManager) : base("head")
+        {
+            this.ampRouteManager = ampRouteManager;
         }
 
         protected override void OnInit(IDotvvmRequestContext context)
@@ -28,7 +32,10 @@ namespace DotVVM.AMP.AmpControls
             context.ResourceManager.AddRequiredResource("amp-boilerplate-css");
             context.ResourceManager.AddRequiredResource("amp-boilerplate-js");
 
-            Children.Add(new AmpMetaCharset());
+            Children.Insert(0, new AmpMetaCharset());
+
+            var fullPageRoute = ampRouteManager.GetFullPageRoute(context.Route);
+            Children.Add(new AmpLinkToFullPage(fullPageRoute));
 
             base.OnInit(context);
         }

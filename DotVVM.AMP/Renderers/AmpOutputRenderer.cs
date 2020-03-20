@@ -14,12 +14,12 @@ namespace DotVVM.AMP.Renderers
 {
     public class AmpOutputRenderer : DefaultOutputRenderer, IAmpOutputRenderer
     {
-        private readonly DotvvmAmpConfig config;
+        private readonly DotvvmAmpConfiguration configuration;
         private readonly IAmpValidator validator;
 
-        public AmpOutputRenderer(DotvvmAmpConfig config, IAmpValidator validator)
+        public AmpOutputRenderer(DotvvmAmpConfiguration configuration, IAmpValidator validator)
         {
-            this.config = config;
+            this.configuration = configuration;
             this.validator = validator;
         }
         protected override MemoryStream RenderPage(IDotvvmRequestContext context, DotvvmView view)
@@ -36,7 +36,7 @@ namespace DotVVM.AMP.Renderers
 
         protected virtual AmpHtmlWriter CreateAmpHtmlWriter(IDotvvmRequestContext context, StreamWriter textWriter)
         {
-            return new AmpHtmlWriter(config, textWriter, context, validator);
+            return new AmpHtmlWriter(configuration, textWriter, context, validator);
         }
 
         public override async Task WriteViewModelResponse(IDotvvmRequestContext context, DotvvmView view)

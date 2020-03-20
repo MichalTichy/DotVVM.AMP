@@ -4,7 +4,7 @@
     //"ie:fast": {}
   },
   "baseUrls": [
-    "http://localhost:50480/"
+    "https://localhost:5001/"
   ],
   "testRunOptions": {
     "runInParallel": true,

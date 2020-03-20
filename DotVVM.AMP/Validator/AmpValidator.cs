@@ -7,12 +7,12 @@ namespace DotVVM.AMP.Validator
 {
     public class AmpValidator : IAmpValidator
     {
-        private readonly DotvvmAmpConfig config;
+        private readonly DotvvmAmpConfiguration configuration;
         private readonly ILogger logger;
 
-        public AmpValidator(DotvvmAmpConfig config, ILogger<AmpValidator> logger = null)
+        public AmpValidator(DotvvmAmpConfiguration configuration, ILogger<AmpValidator> logger = null)
         {
-            this.config = config;
+            this.configuration = configuration;
             this.logger = logger;
         }
         public bool CheckAttribute(string attributeName, string attributeValue)
@@ -27,7 +27,7 @@ namespace DotVVM.AMP.Validator
 
             var exceptionMessage = $"Attribute {attributeName} is not valid!";
 
-            switch (config.AttributeErrorHandlingMode)
+            switch (configuration.AttributeErrorHandlingMode)
             {
                 case ErrorHandlingMode.LogAndIgnore:
                     logger?.LogError(exceptionMessage);
@@ -35,7 +35,7 @@ namespace DotVVM.AMP.Validator
                 case ErrorHandlingMode.Throw:
                     throw new AmpException(exceptionMessage);
                 default:
-                    throw new ArgumentOutOfRangeException($"Unsuported {nameof(config.AttributeErrorHandlingMode)}");
+                    throw new ArgumentOutOfRangeException($"Unsuported {nameof(configuration.AttributeErrorHandlingMode)}");
             }
 
         }
@@ -49,7 +49,7 @@ namespace DotVVM.AMP.Validator
         {
             var errorMessage = "Control tried to use knockout dataBind, which is unsupported during amp rendering.";
 
-            switch (config.KnockoutErrorHandlingMode)
+            switch (configuration.KnockoutErrorHandlingMode)
             {
 
                 case ErrorHandlingMode.Throw:

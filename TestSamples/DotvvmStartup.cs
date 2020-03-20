@@ -1,4 +1,5 @@
 ﻿using DotVVM.AMP;
+using DotVVM.AMP.Config;
 using DotVVM.AMP.Enums;
 using DotVVM.AMP.Extensions;
 using DotVVM.Framework.Configuration;
@@ -14,6 +15,8 @@ namespace TestSamples
         // For more information about this class, visit https://dotvvm.com/docs/tutorials/basics-project-structure
         public void Configure(DotvvmConfiguration config, string applicationPath)
         {
+
+            config.AddDotvvmAmp();
             ConfigureRoutes(config, applicationPath);
             ConfigureControls(config, applicationPath);
             ConfigureResources(config, applicationPath);
@@ -24,7 +27,7 @@ namespace TestSamples
             config.RouteTable.Add("Default", "", "Views/Default.dothtml");
             config.RouteTable.Add("TestRoute", "ControlSamples/RouteLink/TestRoute/{Id}", "Views/ControlSamples/RouteLink/TestRoute.dothtml", new { Id = 0 });
 
-            config.RouteTable.AddWithAmp("empty", "empty", "Views/SimplePages/Empty.dothtml");
+            config.RouteTable.AddWithAmp("empty", "empty", "Views/SimplePages/Empty.dothtml", config);
         }
 
         private void ConfigureControls(DotvvmConfiguration config, string applicationPath)
@@ -34,7 +37,6 @@ namespace TestSamples
 
         private void ConfigureResources(DotvvmConfiguration config, string applicationPath)
         {
-            // register custom resources and adjust paths to the built-in resources
         }
 
         public void ConfigureServices(IDotvvmServiceCollection options)

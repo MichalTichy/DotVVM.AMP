@@ -7,23 +7,18 @@ namespace DotVVM.AMP.Routing
 {
     public class AmpRouteManager : IAmpRouteManager
     {
-        protected Dictionary<string, string> RouteMap = new Dictionary<string, string>();
+        protected Dictionary<RouteBase, RouteBase> RouteMap = new Dictionary<RouteBase, RouteBase>();
 
-        public static IAmpRouteManager Instance { get; } = new AmpRouteManager();
 
-        public void RegisterRoute(string ampRoute, string fullPageRoute)
+        public void RegisterRoute(RouteBase ampRoute, RouteBase fullPageRoute)
         {
             RouteMap.Add(ampRoute, fullPageRoute);
         }
 
-        protected AmpRouteManager()
+        public virtual RouteBase GetFullPageRoute(RouteBase ampRoute)
         {
-        }
-
-        public virtual string GetFullPageRouteName(string ampRouteName)
-        {
-            if (!RouteMap.TryGetValue(ampRouteName, out var fullPageRoute))
-                throw new ArgumentException($"Could not find full version of {ampRouteName}.");
+            if (!RouteMap.TryGetValue(ampRoute, out var fullPageRoute))
+                throw new ArgumentException($"Could not find full version of {ampRoute}.");
 
             return fullPageRoute;
         }
