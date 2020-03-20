@@ -1,17 +1,29 @@
-﻿using DotVVM.Framework.Controls;
+﻿using DotVVM.AMP.Config;
+using DotVVM.Framework.Controls;
+using DotVVM.Framework.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace DotVVM.AMP.ControlTransforms.Transforms
 {
     public abstract class ControlTransformBase : IControlTransform
     {
+        protected readonly DotvvmAmpConfiguration AmpConfiguration;
+        private readonly ILogger logger;
+
+        public ControlTransformBase(DotvvmAmpConfiguration ampConfiguration, ILogger logger = null)
+        {
+            this.AmpConfiguration = ampConfiguration;
+            this.logger = logger;
+        }
         public abstract bool CanTransform(DotvvmControl control);
         protected abstract DotvvmControl CreateReplacementControl(DotvvmControl control);
 
-        public virtual void Transform(DotvvmControl control)
+        public virtual DotvvmControl Transform(DotvvmControl control, IDotvvmRequestContext context)
         {
             var newControl = CreateReplacementControl(control);
             TransferControlProperties(control, newControl);
             ReplaceControl(control, newControl);
+            return newControl;
         }
 
 

@@ -21,11 +21,6 @@ namespace TestSamples
                 .UseStartup<Startup>()
                 .ConfigureLogging(builder =>
                 {
-                    builder.ClearProviders();
-                    builder.AddConsole();
-                })
-                .ConfigureLogging((context, builder) =>
-                {
                     builder.AddConsole();
                 })
                 .Build();

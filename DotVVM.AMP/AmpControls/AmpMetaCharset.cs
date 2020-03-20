@@ -1,18 +1,18 @@
 ﻿using DotVVM.Framework.Controls;
 using DotVVM.Framework.Hosting;
-using DotVVM.Framework.Routing;
 
 namespace DotVVM.AMP.AmpControls
 {
-    public class AmpHtmlTag : HtmlGenericControl, IAmpControl
+    public class AmpMetaCharset : HtmlGenericControl, IAmpControl
     {
-        public AmpHtmlTag() : base("html")
+        public AmpMetaCharset() : base("meta")
         {
 
         }
+
         protected override void AddAttributesToRender(IHtmlWriter writer, IDotvvmRequestContext context)
         {
-            writer.AddAttribute("amp", null);
+            writer.AddAttribute("charset", "utf-8");
             base.AddAttributesToRender(writer, context);
         }
     }

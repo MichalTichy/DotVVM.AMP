@@ -64,5 +64,14 @@ namespace UiTests
                 Assert.True(boilerPlate != null, "Unable to find amp js boilerplate. Ensure that head contains script with correct src and type");
             });
         }
+        [Fact]
+        public void HeadDoesHaveMetaViewport()
+        {
+            RunInAllBrowsers(SampleUrl, wrapper =>
+            {
+                var metaViewport = wrapper.Single("head > meta[name='viewport']", By.CssSelector);
+                AssertUI.Attribute(metaViewport,"content", "width:device-width,minimum-scale:1");
+            });
+        }
     }
 }

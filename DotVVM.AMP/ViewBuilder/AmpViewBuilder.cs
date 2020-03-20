@@ -22,7 +22,7 @@ namespace DotVVM.AMP.ViewBuilder
             var allControls = view.GetThisAndAllDescendants().Reverse();
             foreach (var control in allControls)
             {
-                transformsRegistry.GetTransform(control)?.Transform(control);
+                transformsRegistry.GetTransform(control)?.Transform(control, context);
             }
             return view;
         }
