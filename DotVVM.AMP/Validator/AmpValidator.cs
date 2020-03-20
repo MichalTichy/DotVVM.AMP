@@ -10,7 +10,7 @@ namespace DotVVM.AMP.Validator
         private readonly DotvvmAmpConfig config;
         private readonly ILogger logger;
 
-        public AmpValidator(DotvvmAmpConfig config, ILogger logger)
+        public AmpValidator(DotvvmAmpConfig config, ILogger<AmpValidator> logger = null)
         {
             this.config = config;
             this.logger = logger;
@@ -30,7 +30,7 @@ namespace DotVVM.AMP.Validator
             switch (config.AttributeErrorHandlingMode)
             {
                 case ErrorHandlingMode.LogAndIgnore:
-                    logger.LogError(exceptionMessage);
+                    logger?.LogError(exceptionMessage);
                     return false;
                 case ErrorHandlingMode.Throw:
                     throw new AmpException(exceptionMessage);
