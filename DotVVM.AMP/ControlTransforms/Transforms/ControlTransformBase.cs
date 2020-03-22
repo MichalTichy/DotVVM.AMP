@@ -22,8 +22,14 @@ namespace DotVVM.AMP.ControlTransforms.Transforms
         {
             var newControl = CreateReplacementControl(control);
             TransferControlProperties(control, newControl);
+            SetRequiredSettings(newControl);
             ReplaceControl(control, newControl);
             return newControl;
+        }
+
+        protected virtual void SetRequiredSettings(DotvvmControl newControl)
+        {
+            newControl.SetValueRaw(RenderSettings.ModeProperty, RenderMode.Server);
         }
 
 
