@@ -27,7 +27,7 @@ namespace DotVVM.AMP.AmpControls
             AddRequiredProperties();
             base.AddAttributesToRender(writer, context);
             writer.AddAttribute("name", "viewport");
-            var props = ViewPortProperties.Select(t => $"{t.Key}:{t.Value}");
+            var props = ViewPortProperties.Select(t => $"{t.Key}={t.Value}");
             writer.AddAttribute("content", string.Join(",", props), true);
         }
 

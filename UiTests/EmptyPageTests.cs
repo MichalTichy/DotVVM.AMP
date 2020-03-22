@@ -70,7 +70,7 @@ namespace UiTests
             RunInAllBrowsers(SampleUrl, wrapper =>
             {
                 var metaViewport = wrapper.Single("head > meta[name='viewport']", By.CssSelector);
-                AssertUI.Attribute(metaViewport,"content", "width:device-width,minimum-scale:1");
+                AssertUI.Attribute(metaViewport, "content", "width=device-width,minimum-scale=1");
             });
         }
     }
