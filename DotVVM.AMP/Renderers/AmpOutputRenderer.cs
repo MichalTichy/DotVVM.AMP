@@ -22,6 +22,7 @@ namespace DotVVM.AMP.Renderers
             this.configuration = configuration;
             this.validator = validator;
         }
+
         protected override MemoryStream RenderPage(IDotvvmRequestContext context, DotvvmView view)
         {
             var outStream = new MemoryStream();

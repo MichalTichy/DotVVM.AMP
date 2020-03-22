@@ -37,6 +37,7 @@ namespace DotVVM.AMP.Extensions
 
         private static void RegisterTransforms(DotvvmAmpConfiguration configuration, ILogger logger)
         {
+            configuration.ControlTransforms.Register(new DotvvmViewTransform(configuration, logger));
             configuration.ControlTransforms.Register(new HtmlTagTransform(configuration, logger));
             configuration.ControlTransforms.Register(new HeadTagTransform(configuration, logger));
         }

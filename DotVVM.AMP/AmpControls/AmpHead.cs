@@ -11,11 +11,9 @@ namespace DotVVM.AMP.AmpControls
         {
         }
 
-        protected override void OnInit(IDotvvmRequestContext context)
+        protected override void RenderEndTag(IHtmlWriter writer, IDotvvmRequestContext context)
         {
-            context.ResourceManager.AddRequiredResource("amp-boilerplate-css");
-            context.ResourceManager.AddRequiredResource("amp-boilerplate-js");
-            base.OnInit(context);
+            base.RenderEndTag(writer, context);
         }
     }
 }

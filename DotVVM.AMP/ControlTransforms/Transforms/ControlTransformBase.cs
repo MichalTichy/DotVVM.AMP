@@ -1,6 +1,8 @@
-﻿using DotVVM.AMP.Config;
+﻿using System.Linq;
+using DotVVM.AMP.Config;
 using DotVVM.Framework.Controls;
 using DotVVM.Framework.Hosting;
+using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Logging;
 
 namespace DotVVM.AMP.ControlTransforms.Transforms
@@ -22,15 +24,16 @@ namespace DotVVM.AMP.ControlTransforms.Transforms
         {
             var newControl = CreateReplacementControl(control);
             TransferControlProperties(control, newControl);
-            SetRequiredSettings(newControl);
+            SetRequiredSettings(control, newControl);
             ReplaceControl(control, newControl);
             return newControl;
         }
 
-        protected virtual void SetRequiredSettings(DotvvmControl newControl)
+        protected virtual void SetRequiredSettings(DotvvmControl sourceControl, DotvvmControl newControl)
         {
             newControl.SetValueRaw(RenderSettings.ModeProperty, RenderMode.Server);
         }
+
 
 
         public void ReplaceControl(DotvvmControl currentControl, DotvvmControl newControl)
@@ -38,21 +41,56 @@ namespace DotVVM.AMP.ControlTransforms.Transforms
             var parent = currentControl.Parent as DotvvmControl;
             DotvvmControl[] children = new DotvvmControl[currentControl.Children.Count];
             currentControl.Children.CopyTo(children, 0);
-            var childIndex = parent.Children.IndexOf(currentControl);
 
-            parent.Children.Remove(currentControl);
-            parent.Children.Insert(childIndex, newControl);
+            if (parent != null)
+            {
+                var childIndex = parent.Children.IndexOf(currentControl);
+
+                parent.Children.Remove(currentControl);
+                parent.Children.Insert(childIndex, newControl);
+            }
+
             currentControl.Children.Clear();
             newControl.Children.Add(children);
         }
 
         protected virtual void TransferControlProperties(DotvvmControl source, DotvvmControl target)
         {
+            TransferHtmlAttributes(source, target);
+
+            if (ShouldTransferDotvvmProperties(source, target))
+            {
+                TransferDotvvmProperties(source, target);
+            }
+        }
+
+        protected virtual bool ShouldTransferDotvvmProperties(DotvvmControl source, DotvvmControl target)
+        {
+            return target.GetType().IsSubclassOf(source.GetType());
+        }
+
+        protected virtual void TransferHtmlAttributes(DotvvmControl source, DotvvmControl target)
+        {
             if (source is HtmlGenericControl sourceHtmlControl && target is HtmlGenericControl targetHtmlControl)
             {
                 foreach (var attr in sourceHtmlControl.Attributes)
                 {
                     targetHtmlControl.Attributes.Add(attr.Key, attr.Value);
+                }
+            }
+        }
+
+        protected virtual void TransferDotvvmProperties(DotvvmControl source, DotvvmControl target)
+        {
+            foreach (var property in source.Properties)
+            {
+                if (target.Properties.Any(t => t.Key == property.Key))
+                {
+                    target.SetValueRaw(property.Key, property.Value);
+                }
+                else
+                {
+                    target.Properties.Add(property.Key, property.Value);
                 }
             }
         }
