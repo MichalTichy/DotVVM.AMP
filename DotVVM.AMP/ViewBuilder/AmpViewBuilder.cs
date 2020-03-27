@@ -19,7 +19,7 @@ namespace DotVVM.AMP.ViewBuilder
         public DotvvmView BuildView(IDotvvmRequestContext context)
         {
             var view = ViewBuilder.BuildView(context);
-            var allControls = view.GetThisAndAllDescendants();
+            var allControls = view.GetThisAndAllDescendants().ToList();
 
             view = (DotvvmView)(transformsRegistry.GetTransform(view)?.Transform(view, context) ?? view);
 

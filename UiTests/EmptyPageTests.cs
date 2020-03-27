@@ -73,5 +73,14 @@ namespace UiTests
                 AssertUI.Attribute(metaViewport, "content", "width=device-width,minimum-scale=1");
             });
         }
+        [Fact]
+        public void HasOnlyOneScript()
+        {
+            RunInAllBrowsers(SampleUrl, wrapper =>
+            {
+                var scripts = wrapper.FindElements("script", By.TagName);
+                Assert.Equal(1, scripts.Count);
+            });
+        }
     }
 }

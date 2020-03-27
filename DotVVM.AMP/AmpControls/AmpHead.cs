@@ -6,14 +6,8 @@ namespace DotVVM.AMP.AmpControls
 {
     public class AmpHead : HtmlGenericControl, IAmpControl
     {
-
         public AmpHead() : base("head")
         {
-        }
-
-        protected override void RenderEndTag(IHtmlWriter writer, IDotvvmRequestContext context)
-        {
-            base.RenderEndTag(writer, context);
         }
     }
 }
