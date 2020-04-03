@@ -27,7 +27,15 @@ namespace TestSamples
             config.RouteTable.Add("Default", "", "Views/Default.dothtml");
             config.RouteTable.Add("TestRoute", "ControlSamples/RouteLink/TestRoute/{Id}", "Views/ControlSamples/RouteLink/TestRoute.dothtml", new { Id = 0 });
 
+
             config.RouteTable.AddWithAmp("empty", "empty", "Views/SimplePages/Empty.dothtml", config);
+
+            config.RouteTable.AddWithAmp("ContentPlaceHolderPage", "ContentPlaceHolderPage", "Views/ControlSamples/ContentPlaceHolder/ContentPlaceHolderPage.dothtml", config);
+            config.RouteTable.AddWithAmp("ContentPlaceHolderPage_ContentTest", "ContentPlaceHolderPage_ContentTest", "Views/ControlSamples/ContentPlaceHolder/ContentPlaceHolderPage_ContentTest.dothtml", config);
+            config.RouteTable.AddWithAmp("DoubleContentPlaceHolderPage_ContentTest", "DoubleContentPlaceHolderPage_ContentTest", "Views/ControlSamples/ContentPlaceHolder/DoubleContentPlaceHolderPage_ContentTest.dothtml", config);
+
+            config.RouteTable.AddWithAmp("Literal", "Literal", "Views/ControlSamples/Literal/Literal.dothtml", config);
+            config.RouteTable.AddWithAmp("HtmlLiteral", "HtmlLiteral", "Views/ControlSamples/HtmlLiteral/HtmlLiteral.dothtml", config);
         }
 
         private void ConfigureControls(DotvvmConfiguration config, string applicationPath)

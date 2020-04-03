@@ -8,25 +8,11 @@
     <title></title>
 </head>
 <body>
-
-    <table>
-        <tr>
-            <td RenderSettings.Mode="Server">
-
-                <h1>Server Rendering</h1>
-
-                <fieldset>
-                    <legend>Literal Text=binding, FormatString=null, RenderWrapperTag=true</legend>
-                    <dot:HtmlLiteral Html="{value: Html}" />
-                </fieldset>
-
-                <fieldset>
-                    <legend>Literal Text=binding, FormatString=null, RenderWrapperTag=false</legend>
-                    <dot:HtmlLiteral Html="{value: Html}" RenderWrapperTag="false" />
-                </fieldset>
-
-            </td>
-        </tr>
-    </table>
+    <div data-ui="wrapper-tag">
+        <dot:HtmlLiteral Html="{value: Html}" />
+    </div>
+    <div data-ui="no-wrappert-tag">
+        <dot:HtmlLiteral Html="{value: Html}" RenderWrapperTag="false" />
+    </div>
 </body>
 </html>

@@ -9,5 +9,10 @@ namespace DotVVM.AMP.AmpControls
         public AmpHead() : base("head")
         {
         }
+
+        protected override void OnInit(IDotvvmRequestContext context)
+        {
+            base.OnInit(context);
+        }
     }
 }

@@ -59,7 +59,7 @@ namespace DotVVM.AMP.ControlTransforms.Transforms
         {
             var metaCharsets = control.Children.Where(t => t is HtmlGenericControl genericControl &&
                                                            genericControl.TagName == "meta" &&
-                                                           genericControl.Attributes.Any(p => p.Key.ToLower() == "charset"));
+                                                           genericControl.Attributes.Any(p => p.Key.ToLower() == "charset")).ToList();
 
             foreach (var metaCharset in metaCharsets)
                 control.Children.Remove(metaCharset);
