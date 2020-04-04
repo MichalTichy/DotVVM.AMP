@@ -4,6 +4,5 @@ namespace DotVVM.AMP.Presenter
 {
     public interface IAmpPresenter : IDotvvmPresenter
     {
-
     }
 }

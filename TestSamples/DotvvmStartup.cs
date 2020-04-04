@@ -36,6 +36,9 @@ namespace TestSamples
 
             config.RouteTable.AddWithAmp("Literal", "Literal", "Views/ControlSamples/Literal/Literal.dothtml", config);
             config.RouteTable.AddWithAmp("HtmlLiteral", "HtmlLiteral", "Views/ControlSamples/HtmlLiteral/HtmlLiteral.dothtml", config);
+
+            config.RouteTable.AddWithAmp("CssSingle", "CssSingle", "Views/SimplePages/WithSingleCss.dothtml", config);
+
         }
 
         private void ConfigureControls(DotvvmConfiguration config, string applicationPath)
@@ -45,6 +48,7 @@ namespace TestSamples
 
         private void ConfigureResources(DotvvmConfiguration config, string applicationPath)
         {
+            config.Resources.Register("styles", new StylesheetResource(new UrlResourceLocation("Resources/styles.css")));
         }
 
         public void ConfigureServices(IDotvvmServiceCollection options)
