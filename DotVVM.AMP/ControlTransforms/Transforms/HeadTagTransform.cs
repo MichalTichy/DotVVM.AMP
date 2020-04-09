@@ -16,11 +16,10 @@ namespace DotVVM.AMP.ControlTransforms.Transforms
 
         public override DotvvmControl Transform(DotvvmControl control, IDotvvmRequestContext context)
         {
-            var newControl = base.Transform(control, context);
-            AddMetaCharset(newControl, context);
-            AddLinkToOriginalPage(newControl, context);
-            AddMetaViewPort(newControl, context);
-            return newControl;
+            AddMetaCharset(control, context);
+            AddLinkToOriginalPage(control, context);
+            AddMetaViewPort(control, context);
+            return control;
         }
 
         private void AddMetaViewPort(DotvvmControl newControl, IDotvvmRequestContext context)
@@ -63,11 +62,6 @@ namespace DotVVM.AMP.ControlTransforms.Transforms
 
             foreach (var metaCharset in metaCharsets)
                 control.Children.Remove(metaCharset);
-        }
-
-        protected override DotvvmControl CreateReplacementControl(DotvvmControl control)
-        {
-            return new AmpHead();
         }
 
         public HeadTagTransform(DotvvmAmpConfiguration ampConfiguration, ILogger logger = null) : base(ampConfiguration, logger)

@@ -1,0 +1,23 @@
+﻿@viewModel TestSamples.ViewModels.SimplePages.EmptyViewModel, TestSamples
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <dot:RequiredResource Name="styles" />
+    <style>
+        #red {
+            background-color: red;
+            display: block;
+            min-height: 100px;
+            min-width: 100px;
+        }
+</style>
+</head>
+<body>
+    <div ID="blue"/>
+    <div ID="red"/>
+</body>
+</html>
+
+

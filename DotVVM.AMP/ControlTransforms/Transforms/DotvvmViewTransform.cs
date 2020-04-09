@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace DotVVM.AMP.ControlTransforms.Transforms
 {
-    public class DotvvmViewTransform : ControlTransformBase
+    public class DotvvmViewTransform : ControlReplacementTransformBase
     {
         public DotvvmViewTransform(DotvvmAmpConfiguration ampConfiguration, ILogger logger = null) : base(ampConfiguration, logger)
         {

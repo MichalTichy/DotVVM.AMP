@@ -38,6 +38,9 @@ namespace TestSamples
             config.RouteTable.AddWithAmp("HtmlLiteral", "HtmlLiteral", "Views/ControlSamples/HtmlLiteral/HtmlLiteral.dothtml", config);
 
             config.RouteTable.AddWithAmp("CssSingle", "CssSingle", "Views/SimplePages/WithSingleCss.dothtml", config);
+            config.RouteTable.AddWithAmp("CssMultiple", "CssMultiple", "Views/SimplePages/WithMultipleCss.dothtml", config);
+            config.RouteTable.AddWithAmp("CssExternalCombined", "CssExternalCombined", "Views/SimplePages/WithCombinedExteralCss.dothtml", config);
+            config.RouteTable.AddWithAmp("CssInlineCombined", "CssInlineCombined", "Views/SimplePages/WithCombinedInlineCss.dothtml", config);
 
         }
 
@@ -49,6 +52,7 @@ namespace TestSamples
         private void ConfigureResources(DotvvmConfiguration config, string applicationPath)
         {
             config.Resources.Register("styles", new StylesheetResource(new UrlResourceLocation("Resources/styles.css")));
+            config.Resources.Register("styles2", new StylesheetResource(new UrlResourceLocation("Resources/styles2.css")));
         }
 
         public void ConfigureServices(IDotvvmServiceCollection options)

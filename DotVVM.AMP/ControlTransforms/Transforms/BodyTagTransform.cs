@@ -1,11 +1,12 @@
-﻿using DotVVM.AMP.AmpControls;
+﻿using System;
+using DotVVM.AMP.AmpControls;
 using DotVVM.AMP.Config;
 using DotVVM.Framework.Controls;
 using Microsoft.Extensions.Logging;
 
 namespace DotVVM.AMP.ControlTransforms.Transforms
 {
-    public class BodyTagTransform : ControlTransformBase
+    public class BodyTagTransform : ControlReplacementTransformBase
     {
         public BodyTagTransform(DotvvmAmpConfiguration ampConfiguration, ILogger logger = null) : base(ampConfiguration, logger)
         {

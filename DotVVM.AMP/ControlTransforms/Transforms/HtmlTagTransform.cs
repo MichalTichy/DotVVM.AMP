@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace DotVVM.AMP.ControlTransforms.Transforms
 {
-    public class HtmlTagTransform : ControlTransformBase
+    public class HtmlTagTransform : ControlReplacementTransformBase
     {
         public override bool CanTransform(DotvvmControl control)
         {
