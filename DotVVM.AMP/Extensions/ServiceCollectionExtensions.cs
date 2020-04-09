@@ -42,6 +42,7 @@ namespace DotVVM.AMP.Extensions
             configuration.ControlTransforms.Register(new HeadTagTransform(configuration, logger));
             configuration.ControlTransforms.Register(new BodyTagTransform(configuration, logger));
             configuration.ControlTransforms.Register(new StylesheetLinkTransform(configuration, logger));
+            configuration.ControlTransforms.Register(new RouteLinkTransform(configuration, logger));
         }
     }
 }

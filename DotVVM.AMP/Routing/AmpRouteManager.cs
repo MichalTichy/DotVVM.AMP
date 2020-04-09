@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using DotVVM.AMP.Validator;
 using DotVVM.Framework.Routing;
 
@@ -8,8 +9,6 @@ namespace DotVVM.AMP.Routing
     public class AmpRouteManager : IAmpRouteManager
     {
         protected Dictionary<RouteBase, RouteBase> RouteMap = new Dictionary<RouteBase, RouteBase>();
-
-
         public void RegisterRoute(RouteBase ampRoute, RouteBase fullPageRoute)
         {
             RouteMap.Add(ampRoute, fullPageRoute);
@@ -22,6 +21,15 @@ namespace DotVVM.AMP.Routing
 
             return fullPageRoute;
         }
+
+        public string GetAmpPageRouteName(string fullPageName)
+        {
+            var ampRouteName = BuildAmpRouteName(fullPageName);
+            if (RouteMap.Any(t => t.Key.RouteName == ampRouteName))
+                return ampRouteName;
+            return fullPageName;
+        }
+
         public virtual string BuildAmpRouteName(string dotvvmPageRouteName)
         {
             return $"{dotvvmPageRouteName}-amp";

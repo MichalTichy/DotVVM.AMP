@@ -8,5 +8,6 @@ namespace DotVVM.AMP.Routing
         string BuildAmpUrl(string dotvvmPageUrl);
         void RegisterRoute(RouteBase ampRoute, RouteBase fullPageRoute);
         RouteBase GetFullPageRoute(RouteBase ampRoute);
+        string GetAmpPageRouteName(string fullPageName);
     }
 }

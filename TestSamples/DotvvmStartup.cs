@@ -42,6 +42,10 @@ namespace TestSamples
             config.RouteTable.AddWithAmp("CssExternalCombined", "CssExternalCombined", "Views/SimplePages/WithCombinedExteralCss.dothtml", config);
             config.RouteTable.AddWithAmp("CssInlineCombined", "CssInlineCombined", "Views/SimplePages/WithCombinedInlineCss.dothtml", config);
 
+            config.RouteTable.AddWithAmp("LinkToAmpPage", "LinkToAmpPage", "Views/SimplePages/LinkToAmpPage.dothtml", config);
+            config.RouteTable.AddWithAmp("LinkToNonAmpPage", "LinkToNonAmpPage", "Views/SimplePages/LinkToNonAmpPage.dothtml", config);
+
+
         }
 
         private void ConfigureControls(DotvvmConfiguration config, string applicationPath)

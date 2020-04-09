@@ -1,0 +1,13 @@
+﻿@viewModel TestSamples.ViewModels.SimplePages.EmptyViewModel, TestSamples
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+</head>
+<body>
+    <dot:RouteLink RouteName="default" Text="Go to full page" />
+</body>
+</html>
+
+
