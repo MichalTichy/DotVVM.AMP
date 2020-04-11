@@ -1,0 +1,12 @@
+﻿@viewModel TestSamples.ViewModels.ControlSamples.RouteLink.RouteLinkUrlGenViewModel
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+</head>
+<body>
+    <dot:RouteLink RouteName="TestRouteAmp" Text="Optional parameter missing" />
+    <dot:RouteLink RouteName="TestRouteAmp2" Text="Optional parameter missing amp route has different defaults" />
+    <dot:RouteLink Param-Id="2" RouteName="TestRouteAmp" Text="Optional parameter present" />
+</body>
+</html>

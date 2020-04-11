@@ -16,7 +16,7 @@ namespace TestSamples.ViewModels
                 .Select(r => new RouteData()
                 {
                     RouteName = r.RouteName,
-                    Url = Context.TranslateVirtualPath(r.BuildUrl())
+                    Url = Context.TranslateVirtualPath(r.BuildUrl(r.DefaultValues))
                 })
                 .ToList();
 

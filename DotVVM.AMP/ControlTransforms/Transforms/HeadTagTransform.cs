@@ -45,7 +45,7 @@ namespace DotVVM.AMP.ControlTransforms.Transforms
 
         private void AddLinkToOriginalPage(DotvvmControl newControl, IDotvvmRequestContext context)
         {
-            newControl.Children.Add(new AmpLinkToFullPage(AmpConfiguration.AmpRouteManager.GetFullPageRoute(context.Route)));
+            newControl.Children.Add(new AmpLinkToFullPage(context.Route,AmpConfiguration.AmpRouteManager.GetFullPageRoute(context.Route)));
         }
 
         private void AddMetaCharset(DotvvmControl control, IDotvvmRequestContext context)

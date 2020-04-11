@@ -26,6 +26,8 @@ namespace TestSamples
         {
             config.RouteTable.Add("Default", "", "Views/Default.dothtml");
             config.RouteTable.Add("TestRoute", "ControlSamples/RouteLink/TestRoute/{Id}", "Views/ControlSamples/RouteLink/TestRoute.dothtml", new { Id = 0 });
+            config.RouteTable.AddWithAmp("TestRouteAmp", "ControlSamples/RouteLink/TestRoute/{Id}", "Views/ControlSamples/RouteLink/TestRoute.dothtml", config, new { Id = 0 });
+            config.RouteTable.AddWithAmp("TestRouteAmp2", "ControlSamples/RouteLink/TestRoute2/{Id}", "Views/ControlSamples/RouteLink/TestRoute.dothtml", config, new { Id = 0 }, new {Id=1});
 
 
             config.RouteTable.AddWithAmp("empty", "empty", "Views/SimplePages/Empty.dothtml", config);
@@ -42,8 +44,10 @@ namespace TestSamples
             config.RouteTable.AddWithAmp("CssExternalCombined", "CssExternalCombined", "Views/SimplePages/WithCombinedExteralCss.dothtml", config);
             config.RouteTable.AddWithAmp("CssInlineCombined", "CssInlineCombined", "Views/SimplePages/WithCombinedInlineCss.dothtml", config);
 
-            config.RouteTable.AddWithAmp("LinkToAmpPage", "LinkToAmpPage", "Views/SimplePages/LinkToAmpPage.dothtml", config);
-            config.RouteTable.AddWithAmp("LinkToNonAmpPage", "LinkToNonAmpPage", "Views/SimplePages/LinkToNonAmpPage.dothtml", config);
+            config.RouteTable.AddWithAmp("LinkToAmpPage", "LinkToAmpPage", "Views/ControlSamples/RouteLink/LinkToAmpPage.dothtml", config);
+            config.RouteTable.AddWithAmp("LinkToNonAmpPage", "LinkToNonAmpPage", "Views/ControlSamples/RouteLink/LinkToNonAmpPage.dothtml", config);
+            config.RouteTable.AddWithAmp("RouteLinkUrlGen", "RouteLinkUrlGen", "Views/ControlSamples/RouteLink/RouteLinkUrlGen.dothtml", config);
+            config.RouteTable.AddWithAmp("RouteLinkUrlGenToAmp", "RouteLinkUrlGenToAmp", "Views/ControlSamples/RouteLink/RouteLinkUrlGenToAmp.dothtml", config);
 
 
         }

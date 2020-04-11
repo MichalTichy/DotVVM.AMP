@@ -21,6 +21,7 @@ namespace DotVVM.AMP.Extensions
 
             var ampPageRoute = ampRouteManager.BuildAmpRouteName(routeName);
 
+            if (ampPageDefaultValues==null) ampPageDefaultValues = dotVVMPageDefaultValues;
 
             routeTable.Add(routeName, url, virtualPath, dotVVMPageDefaultValues, dotvvmPagePresenterFactory);
             routeTable.Add(ampPageRoute, ampRouteManager.BuildAmpUrl(url), virtualPath, ampPageDefaultValues, ampPagePresenterFactory ?? new Func<IServiceProvider, IDotvvmPresenter>(GetDefaultAmpPresenter));
@@ -34,6 +35,8 @@ namespace DotVVM.AMP.Extensions
             var ampRouteManager = GetAmpConfiguration(dotvvmConfiguration).AmpRouteManager;
 
             var ampPageRoute = ampRouteManager.BuildAmpRouteName(routeName);
+
+            if (ampPageDefaultValues == null) ampPageDefaultValues = dotvvmPageDefaultValues;
 
             routeTable.Add(routeName, url, dotvvmPagePresenterFactory, dotvvmPageDefaultValues);
             routeTable.Add(ampPageRoute, ampRouteManager.BuildAmpUrl(url), ampPagePresenterFactory ?? new Func<IServiceProvider, IDotvvmPresenter>(GetDefaultAmpPresenter), ampPageDefaultValues);
@@ -49,6 +52,8 @@ namespace DotVVM.AMP.Extensions
             var ampRouteManager = GetAmpConfiguration(dotvvmConfiguration).AmpRouteManager;
 
             var ampPageRoute = ampRouteManager.BuildAmpRouteName(routeName);
+
+            if (ampPageDefaultValues == null) ampPageDefaultValues = dotvvmPageDefaultValues;
 
             routeTable.Add(routeName, url, dotvvmPagePresenterType, dotvvmPageDefaultValues);
             routeTable.Add(ampPageRoute, ampRouteManager.BuildAmpUrl(url), ampPagePresenterType, ampPageDefaultValues);
