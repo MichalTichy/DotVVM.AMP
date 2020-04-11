@@ -20,22 +20,14 @@ namespace DotVVM.AMP.AmpControls
         protected override void AddAttributesToRender(IHtmlWriter writer, IDotvvmRequestContext context)
         {
             writer.AddAttribute("rel", "canonical");
-            var parameters = GeRouteParameters(context);
-            writer.AddAttribute("href", fullPageRoute.BuildUrl(parameters));
+            var urlWithDefault= ampPageRoute.BuildUrl(ampPageRoute.DefaultValues);
+            var urlWithCurrent = ampPageRoute.BuildUrl(context.Parameters);
+            var isDefault = urlWithDefault == urlWithCurrent;
+            var urlFullPage= isDefault ?
+                fullPageRoute.BuildUrl(fullPageRoute.DefaultValues) :
+                fullPageRoute.BuildUrl(context.Parameters);
+            writer.AddAttribute("href", urlFullPage);
             base.AddAttributesToRender(writer, context);
-        }
-
-        private IDictionary<string, object> GeRouteParameters(IDotvvmRequestContext context)
-        {
-            var isDefault = context.Parameters.Count == ampPageRoute.DefaultValues.Count;
-            if (isDefault)
-            { 
-                if (context.Parameters.Any(parameter => !ampPageRoute.DefaultValues.Contains(parameter)))
-                {
-                    isDefault = false;
-                }
-            }
-            return isDefault? fullPageRoute.DefaultValues : context.Parameters;
         }
     }
 }
