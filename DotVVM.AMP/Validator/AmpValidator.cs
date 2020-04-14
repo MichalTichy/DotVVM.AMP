@@ -25,6 +25,7 @@ namespace DotVVM.AMP.Validator
         };
 
         protected string[] ForbiddenTags = new[] {"base", "picture", "frame", "frameset", "object", "param", "applet"};
+        protected string[] IgnoredBindings = new[] {"text"};
 
         public AmpValidator(DotvvmAmpConfiguration configuration, ILogger<AmpValidator> logger = null)
         {
@@ -235,11 +236,16 @@ namespace DotVVM.AMP.Validator
 
         public virtual bool ValidateKnockoutDataBind(string name)
         {
+            if (IgnoredBindings.Contains(name))
+            {
+                logger.LogWarning($"{name} binding is ignored");
+                return false;
+            }
+            
             var errorMessage = "Control tried to use knockout dataBind, which is unsupported during amp rendering.";
 
             switch (configuration.KnockoutErrorHandlingMode)
             {
-
                 case ErrorHandlingMode.Throw:
                     throw new AmpException(errorMessage);
                 case ErrorHandlingMode.LogAndIgnore:
