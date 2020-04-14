@@ -9,6 +9,7 @@ using DotVVM.Framework.Controls;
 using DotVVM.Framework.Controls.Infrastructure;
 using DotVVM.Framework.Hosting;
 using DotVVM.Framework.Runtime;
+using Microsoft.Extensions.Logging;
 
 namespace DotVVM.AMP.Renderers
 {
@@ -16,11 +17,13 @@ namespace DotVVM.AMP.Renderers
     {
         private readonly DotvvmAmpConfiguration configuration;
         private readonly IAmpValidator validator;
+        private readonly ILogger logger;
 
-        public AmpOutputRenderer(DotvvmAmpConfiguration configuration, IAmpValidator validator)
+        public AmpOutputRenderer(DotvvmAmpConfiguration configuration, IAmpValidator validator,ILogger logger=null)
         {
             this.configuration = configuration;
             this.validator = validator;
+            this.logger = logger;
         }
 
         protected override MemoryStream RenderPage(IDotvvmRequestContext context, DotvvmView view)
@@ -37,7 +40,7 @@ namespace DotVVM.AMP.Renderers
 
         protected virtual AmpHtmlWriter CreateAmpHtmlWriter(IDotvvmRequestContext context, StreamWriter textWriter)
         {
-            return new AmpHtmlWriter(configuration, textWriter, context, validator);
+            return new AmpHtmlWriter(configuration, textWriter, context, validator,logger);
         }
 
         public override async Task WriteViewModelResponse(IDotvvmRequestContext context, DotvvmView view)

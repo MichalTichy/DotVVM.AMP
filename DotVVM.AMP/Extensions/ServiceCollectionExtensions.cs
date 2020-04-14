@@ -8,6 +8,7 @@ using DotVVM.AMP.Validator;
 using DotVVM.AMP.ViewBuilder;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using DotVVM.AMP.DotvvmResources;
 using Microsoft.Extensions.Logging;
 
 namespace DotVVM.AMP.Extensions
@@ -22,7 +23,8 @@ namespace DotVVM.AMP.Extensions
             serviceCollection.Services.AddSingleton<IAmpControlTransformsRegistry, AmpControlTransformsRegistry>();
             serviceCollection.Services.AddSingleton<IAmpValidator, AmpValidator>();
             serviceCollection.Services.AddSingleton<IAmpRouteManager, AmpRouteManager>();
-
+            serviceCollection.Services.AddSingleton<IAmpStylesheetResourceCollection, AmpStylesheetResourceCollection>();
+            
             serviceCollection.Services.AddSingleton<DotvvmAmpConfiguration>(provider =>
             {
                 var registry = provider.GetService<IAmpControlTransformsRegistry>();

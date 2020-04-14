@@ -15,8 +15,13 @@ namespace DotVVM.AMP.Config
 
         public ErrorHandlingMode AttributeErrorHandlingMode { get; set; }
         public ErrorHandlingMode KnockoutErrorHandlingMode { get; set; }
+        public ErrorHandlingMode HtmlTagErrorHandlingMode { get; set; }
+        public ErrorHandlingMode StylesErrorHandlingMode { get; set; }
+
 
         public IAmpControlTransformsRegistry ControlTransforms { get; set; }
         public IAmpRouteManager AmpRouteManager { get; set; }
+        public static string AmpJsUrl { get; set; } = @"https://cdn.ampproject.org/v0.js";
+        public static uint MaximumAmpCustomStylesheetSize = 75000;
     }
 }

@@ -1,4 +1,5 @@
-﻿using DotVVM.Framework.Controls;
+﻿using DotVVM.AMP.Config;
+using DotVVM.Framework.Controls;
 using DotVVM.Framework.Hosting;
 using DotVVM.Framework.ResourceManagement;
 
@@ -8,7 +9,7 @@ namespace DotVVM.AMP.DotvvmResources
     {
         public AmpBoilerPlaceJsResource()
         {
-            Location = new UrlResourceLocation("https://cdn.ampproject.org/v0.js");
+            Location = new UrlResourceLocation(DotvvmAmpConfiguration.AmpJsUrl);
             RenderPosition = ResourceRenderPosition.Head;
         }
 

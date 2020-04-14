@@ -8,6 +8,7 @@ using DotVVM.AMP.Enums;
 using DotVVM.AMP.Validator;
 using DotVVM.Framework.Controls;
 using DotVVM.Framework.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace DotVVM.AMP.Writer
 {
@@ -16,18 +17,23 @@ namespace DotVVM.AMP.Writer
         protected IHtmlWriter writer;
         protected readonly DotvvmAmpConfiguration AmpConfiguration;
         protected readonly IAmpValidator validator;
+        protected readonly ILogger Logger;
 
-        public AmpHtmlWriter(DotvvmAmpConfiguration configuration, StreamWriter textWriter, IDotvvmRequestContext context, IAmpValidator validator)
+        protected Dictionary<string, string> Attributes = new Dictionary<string, string>();
+        protected bool StartTagSkipped = false;
+        public AmpHtmlWriter(DotvvmAmpConfiguration configuration, StreamWriter textWriter, IDotvvmRequestContext context, IAmpValidator validator, ILogger logger)
         {
             writer = new HtmlWriter(textWriter, context);
             this.AmpConfiguration = configuration;
             this.validator = validator;
+            Logger = logger;
         }
 
         public virtual void AddAttribute(string name, string value, bool append = false, string appendSeparator = null)
         {
             if (validator.CheckAttribute(name, value))
             {
+                Attributes.Add(name,value);
                 writer.AddAttribute(name, value, append, appendSeparator);
             }
         }
@@ -36,6 +42,7 @@ namespace DotVVM.AMP.Writer
         {
             if (validator.CheckStyleAttribute(name, value))
             {
+                Attributes.Add(name,value);
                 writer.AddStyleAttribute(name, value);
             }
         }
@@ -54,29 +61,48 @@ namespace DotVVM.AMP.Writer
 
         public virtual void RenderBeginTag(string name)
         {
-            //tags are not validated, because all invalid tags should be replaced by their amp alternatives by now
-            writer.RenderBeginTag(name);
+            if (validator.CheckHtmlTag(name,Attributes))
+            {
+                Attributes.Clear();
+                writer.RenderBeginTag(name);
+            }
+            else
+            {
+                Logger?.LogError($"Html tag {name} not rendered. All its content will not be rendered.");
+                StartTagSkipped = true;
+            }
         }
 
         public virtual void RenderSelfClosingTag(string name)
         {
-            //tags are not validated, because all invalid tags should be replaced by their amp alternatives by now
-            writer.RenderSelfClosingTag(name);
+            if (validator.CheckHtmlTag(name, Attributes))
+            {
+                Attributes.Clear();
+                writer.RenderSelfClosingTag(name);
+            }
         }
 
         public virtual void RenderEndTag()
         {
-            //tags are not validated, because all invalid tags should be replaced by their amp alternatives by now
-            writer.RenderEndTag();
+            if (!StartTagSkipped)
+            {
+                writer.RenderEndTag();
+            }
+            else
+            {
+                StartTagSkipped = false;
+            }
         }
 
         public virtual void WriteText(string text)
         {
+            if (StartTagSkipped) return;
             writer.WriteText(text);
         }
 
         public virtual void WriteUnencodedText(string text)
         {
+            if (StartTagSkipped) return;
             writer.WriteUnencodedText(text);
         }
 
@@ -84,6 +110,7 @@ namespace DotVVM.AMP.Writer
         {
             if (validator.CheckAttribute(name, value))
             {
+                Attributes.Add(name,value);
                 writer.WriteHtmlAttribute(name, value);
             }
         }

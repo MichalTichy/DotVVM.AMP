@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using DotVVM.AMP.Config;
 using DotVVM.AMP.Enums;
+using ExCSS;
 using Microsoft.Extensions.Logging;
 
 namespace DotVVM.AMP.Validator
@@ -10,23 +15,148 @@ namespace DotVVM.AMP.Validator
         private readonly DotvvmAmpConfiguration configuration;
         private readonly ILogger logger;
 
+
+        protected Dictionary<string, string> ReplacedHtmlTags = new Dictionary<string, string>()
+        {
+            {"img", "amp-img"},
+            {"video", "amp-video"},
+            {"audio", "amp-audio"},
+            {"iframe", "amp-iframe"}
+        };
+
+        protected string[] ForbiddenTags = new[] {"base", "picture", "frame", "frameset", "object", "param", "applet"};
+
         public AmpValidator(DotvvmAmpConfiguration configuration, ILogger<AmpValidator> logger = null)
         {
             this.configuration = configuration;
             this.logger = logger;
         }
-        public bool CheckAttribute(string attributeName, string attributeValue)
-        {
-            var normalizedAttr = attributeName.ToLower();
-            var isValid = !normalizedAttr.StartsWith("on") && normalizedAttr != "xmlns" && !normalizedAttr.StartsWith("xml:") && !normalizedAttr.StartsWith("i-amp-");
 
-            if (isValid)
+        public virtual bool CheckHtmlTag(string tagName, IDictionary<string, string> attributes)
+        {
+            if (!CheckForForbiddenHtmlTag(tagName)) return false;
+
+            if (!CheckForRestrictedHtmlTag(tagName, attributes)) return false;
+
+            if (!CheckForReplacedHtmlTags(tagName)) return false;
+
+            return true;
+        }
+
+        protected virtual bool CheckForReplacedHtmlTags(string tagName)
+        {
+            var isValid = true;
+            string errorMessage = string.Empty;
+            if (ReplacedHtmlTags.ContainsKey(tagName.ToLower()))
             {
-                return true;
+                isValid = false;
+                errorMessage =
+                    $"Html tag {tagName} was replaced by {ReplacedHtmlTags[tagName.ToLower()]} in amp pages!";
             }
 
-            var exceptionMessage = $"Attribute {attributeName} is not valid!";
+            if (!isValid)
+            {
+                switch (configuration.HtmlTagErrorHandlingMode)
+                {
+                    case ErrorHandlingMode.Throw:
+                        throw new AmpException(errorMessage);
+                    case ErrorHandlingMode.LogAndIgnore:
+                        logger?.LogError(errorMessage);
+                        return false;
+                    default:
+                        throw new ArgumentOutOfRangeException(
+                            $"Unsuported {nameof(configuration.HtmlTagErrorHandlingMode)}");
+                }
+            }
 
+            return true;
+        }
+
+        protected virtual bool CheckForRestrictedHtmlTag(string tagName, IDictionary<string, string> attributes)
+        {
+            bool isRestrictedTagValid = true;
+            string restrictedTagErrorMessage = string.Empty;
+            switch (tagName.ToLower())
+            {
+                case string script when script == "script":
+                    isRestrictedTagValid = attributes.ContainsKey("type") && (
+                                           attributes["type"].ToLower() ==
+                                           "application/ld+json".Replace(" ", string.Empty) || attributes["type"].ToLower()== "application/json".Replace(" ", string.Empty)) ||
+                                           (attributes.ContainsKey("src") &&
+                                            attributes["src"].ToLower() == DotvvmAmpConfiguration.AmpJsUrl);
+                    restrictedTagErrorMessage =
+                        $@"Html tag script is valid only with type set to application/ld+json or with src set to {DotvvmAmpConfiguration.AmpJsUrl}!";
+                    break;
+                case string input when input == "input":
+                    isRestrictedTagValid = !(attributes.ContainsKey("type") &&
+                                             (attributes["type"].ToLower() == "image" ||
+                                              attributes["type"].ToLower() == "button" ||
+                                              attributes["type"].ToLower() == "password" ||
+                                              attributes["type"].ToLower() == "file"));
+                    restrictedTagErrorMessage =
+                        $@"Html tag script is invalid with type set to image, button, password or file!";
+
+                    break;
+                case string style when style == "style":
+                    isRestrictedTagValid =
+                        attributes.ContainsKey("amp-custom") || attributes.ContainsKey("amp-boilerplate");
+                    restrictedTagErrorMessage =
+                        $@"Only single amp-boilerplate style or single amp-custom style is valid per page!";
+                    break;
+            }
+
+            if (!isRestrictedTagValid)
+            {
+                switch (configuration.HtmlTagErrorHandlingMode)
+                {
+                    case ErrorHandlingMode.Throw:
+                        throw new AmpException(restrictedTagErrorMessage);
+                    case ErrorHandlingMode.LogAndIgnore:
+                        logger?.LogError(restrictedTagErrorMessage);
+                        return false;
+                    default:
+                        throw new ArgumentOutOfRangeException(
+                            $"Unsuported {nameof(configuration.HtmlTagErrorHandlingMode)}");
+                }
+            }
+
+            return true;
+        }
+
+        protected virtual bool CheckForForbiddenHtmlTag(string tagName)
+        {
+            if (ForbiddenTags.Contains(tagName.ToLower()))
+            {
+                var errorMessage = $"Html tag {tagName} is not allowed!";
+                switch (configuration.HtmlTagErrorHandlingMode)
+                {
+                    case ErrorHandlingMode.Throw:
+                        throw new AmpException(errorMessage);
+                    case ErrorHandlingMode.LogAndIgnore:
+                        logger?.LogError(errorMessage);
+                        return false;
+                    default:
+                        throw new ArgumentOutOfRangeException(
+                            $"Unsuported {nameof(configuration.HtmlTagErrorHandlingMode)}");
+                }
+            }
+
+            return true;
+        }
+
+        public virtual bool CheckAttribute(string attributeName, string attributeValue)
+        {
+            var normalizedAttr = attributeName.ToLower();
+            var isAttributeNameValid = !normalizedAttr.StartsWith("on") &&
+                          normalizedAttr != "xmlns" &&
+                          !normalizedAttr.StartsWith("xml:");
+
+            var isIdAttributeValid= attributeName != "id" || !attributeValue.ToLower().StartsWith("amp-") && !attributeValue.ToLower().StartsWith("i-amp-");
+            if (isAttributeNameValid && isIdAttributeValid)
+                return true;
+
+            var exceptionMessage = $"Attribute {attributeName} is not valid {(!isIdAttributeValid? $"with value {attributeValue}" : "")}!";
+            
             switch (configuration.AttributeErrorHandlingMode)
             {
                 case ErrorHandlingMode.LogAndIgnore:
@@ -40,12 +170,70 @@ namespace DotVVM.AMP.Validator
 
         }
 
-        public bool CheckStyleAttribute(string name, string value)
+        public virtual bool CheckStylesheet(Stylesheet stylesheet)
         {
-            return true; //todo
+            bool allValid = true;
+            var errors = new List<string>();
+            foreach (var stylesheetStyleRule in stylesheet.StyleRules.OfType<StyleRule>())
+            {
+                var isSelectorValid = !stylesheetStyleRule.SelectorText.Contains(".-amp-") && !stylesheetStyleRule.SelectorText.Contains(".i-amp-");
+                if (!isSelectorValid)
+                {
+                    errors.Add("Found css selector targets -amp- or i-amp- tag. Targeting such elements is not supported!");
+                    allValid = false;
+                    (stylesheetStyleRule.Parent as StylesheetNode)?.RemoveChild(stylesheetStyleRule);
+                    break;
+                }
+
+                foreach (var property in stylesheetStyleRule.Children.OfType<Property>())
+                {
+                    if (property.IsImportant)
+                    {
+                        property.IsImportant = false;
+                        errors.Add($"Important css properties are not allowed! {property.Name}:{property.Value} !important");
+                        allValid = false;
+                    }
+
+                    if (property.Name.ToLower().StartsWith("overflow") && (property.Value.ToLower()=="auto"  || property.Value.ToLower()=="scroll"))
+                    {
+                        errors.Add($"overflow css properties cannot have value auto or scroll! {property.Name}:{property.Value}");
+                        stylesheetStyleRule?.RemoveChild(property);
+                        allValid = false;
+                    }
+
+                    //TODO validate animations
+                }
+            }
+
+            if (!allValid)
+            {
+                switch (configuration.StylesErrorHandlingMode)
+                {
+                    case ErrorHandlingMode.Throw:
+                        throw new AmpException(string.Join("\n",errors));
+                    case ErrorHandlingMode.LogAndIgnore:
+                        foreach (var error in errors)
+                        {
+                            logger.LogError(error);
+                            return false;
+                        }
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+
+            return true;
         }
 
-        public bool ValidateKnockoutDataBind(string name)
+
+        public virtual bool CheckStyleAttribute(string name, string value)
+        {
+            var stylesheet = new StylesheetParser().Parse($"{name}:{value};");
+            return CheckStylesheet(stylesheet);
+        }
+
+        public virtual bool ValidateKnockoutDataBind(string name)
         {
             var errorMessage = "Control tried to use knockout dataBind, which is unsupported during amp rendering.";
 

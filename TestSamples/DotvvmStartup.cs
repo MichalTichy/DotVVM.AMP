@@ -43,6 +43,7 @@ namespace TestSamples
             config.RouteTable.AddWithAmp("CssMultiple", "CssMultiple", "Views/SimplePages/WithMultipleCss.dothtml", config);
             config.RouteTable.AddWithAmp("CssExternalCombined", "CssExternalCombined", "Views/SimplePages/WithCombinedExteralCss.dothtml", config);
             config.RouteTable.AddWithAmp("CssInlineCombined", "CssInlineCombined", "Views/SimplePages/WithCombinedInlineCss.dothtml", config);
+            config.RouteTable.AddWithAmp("WithDependendCss", "WithDependendCss", "Views/SimplePages/WithDependendCss.dothtml", config);
 
             config.RouteTable.AddWithAmp("LinkToAmpPage", "LinkToAmpPage", "Views/ControlSamples/RouteLink/LinkToAmpPage.dothtml", config);
             config.RouteTable.AddWithAmp("LinkToNonAmpPage", "LinkToNonAmpPage", "Views/ControlSamples/RouteLink/LinkToNonAmpPage.dothtml", config);
@@ -61,6 +62,9 @@ namespace TestSamples
         {
             config.Resources.Register("styles", new StylesheetResource(new UrlResourceLocation("Resources/styles.css")));
             config.Resources.Register("styles2", new StylesheetResource(new UrlResourceLocation("Resources/styles2.css")));
+            config.Resources.Register("dependedStyles",
+                new StylesheetResource(new UrlResourceLocation("Resources/styles.css"))
+                    {Dependencies = new[] {"styles2"}});
         }
 
         public void ConfigureServices(IDotvvmServiceCollection options)

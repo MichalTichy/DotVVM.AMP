@@ -20,5 +20,11 @@ namespace DotVVM.AMP.AmpControls
 
             base.RenderBeginTag(writer, context);
         }
+
+        protected override void RenderContents(IHtmlWriter writer, IDotvvmRequestContext context)
+        {
+            ResourcesRenderer.RenderResources(context.ResourceManager,writer,context,ResourceRenderPosition.Body);
+            base.RenderContents(writer, context);
+        }
     }
 }
