@@ -16,10 +16,14 @@
     </style>
 </head>
 <body>
-    <dot:Repeater WrapperTagName="ul" DataSource="{value: Routes }">
+    <h1>AMP ROUTES</h1>
+    <dot:Repeater WrapperTagName="ul" DataSource="{value: AmpRoutes }">
         <li><a href="{value: Url}">{{value: RouteName}}</a></li>
     </dot:Repeater>
-    <div>Number of Tests: {{value: Routes.Count}}</div>
+    <h2>NORMAL ROUTES</h2>
 
+    <dot:Repeater WrapperTagName="ul" DataSource="{value: NormalRoutes }">
+        <li><a href="{value: Url}">{{value: RouteName}}</a></li>
+    </dot:Repeater>
 </body>
 </html>
