@@ -5,7 +5,7 @@ using DotVVM.Framework.ResourceManagement;
 
 namespace DotVVM.AMP.DotvvmResources
 {
-    public class AmpKeyframesStylesheetResource : ResourceBase
+    public class AmpKeyframesStylesheetResource : ResourceBase, IAmpAllowedResource
     {
         protected IAmpStylesheetResourceCollection resources;
 

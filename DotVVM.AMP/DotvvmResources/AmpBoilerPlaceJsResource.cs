@@ -5,7 +5,7 @@ using DotVVM.Framework.ResourceManagement;
 
 namespace DotVVM.AMP.DotvvmResources
 {
-    public class AmpBoilerPlaceJsResource : ScriptResource
+    public class AmpBoilerPlaceJsResource : ScriptResource, IAmpAllowedResource
     {
         public AmpBoilerPlaceJsResource()
         {

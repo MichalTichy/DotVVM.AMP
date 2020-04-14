@@ -26,6 +26,7 @@ namespace DotVVM.AMP.Presenter
         public async Task ProcessRequest(IDotvvmRequestContext context)
         {
             context.ResourceManager.RegisterProcessor(new AmpCustomCssResourceProcessor(_ampStylesheetResourceCollection,_configuration.Resources));
+            context.ResourceManager.RegisterProcessor(new AmpResourcesProcessor());
             await base.ProcessRequest(context);
         }
     }
