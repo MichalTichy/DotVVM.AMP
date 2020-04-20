@@ -45,6 +45,11 @@ namespace DotVVM.AMP.Extensions
             configuration.ControlTransforms.Register(new BodyTagTransform(configuration, logger));
             configuration.ControlTransforms.Register(new StylesheetLinkTransform(configuration, logger));
             configuration.ControlTransforms.Register(new RouteLinkTransform(configuration, logger));
+            configuration.ControlTransforms.Register(new GridViewTransform(configuration, logger));
+            configuration.ControlTransforms.Register(new GridViewColumnTransform(configuration,logger));
+            configuration.ControlTransforms.Register(new GridViewTextColumnTransform(configuration,logger));
+            configuration.ControlTransforms.Register(new GridViewTemplateColumnTransform(configuration,logger));
+
         }
     }
 }

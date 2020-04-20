@@ -25,7 +25,7 @@ namespace DotVVM.AMP.Validator
         };
 
         protected string[] ForbiddenTags = new[] {"base", "picture", "frame", "frameset", "object", "param", "applet"};
-        protected string[] IgnoredBindings = new[] {"text"};
+        protected string[] IgnoredBindings = new[] {"text", "withGridViewDataSet", "dotvvm-SSR-foreach" };
 
         public AmpValidator(DotvvmAmpConfiguration configuration, ILogger<AmpValidator> logger = null)
         {
@@ -242,7 +242,7 @@ namespace DotVVM.AMP.Validator
                 return false;
             }
             
-            var errorMessage = "Control tried to use knockout dataBind, which is unsupported during amp rendering.";
+            var errorMessage = $"Control tried to use knockout dataBind {name}, which is unsupported during amp rendering.";
 
             switch (configuration.KnockoutErrorHandlingMode)
             {

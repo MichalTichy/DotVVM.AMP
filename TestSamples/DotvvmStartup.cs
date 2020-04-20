@@ -50,7 +50,16 @@ namespace TestSamples
             config.RouteTable.AddWithAmp("RouteLinkUrlGen", "RouteLinkUrlGen", "Views/ControlSamples/RouteLink/RouteLinkUrlGen.dothtml", config);
             config.RouteTable.AddWithAmp("RouteLinkUrlGenToAmp", "RouteLinkUrlGenToAmp", "Views/ControlSamples/RouteLink/RouteLinkUrlGenToAmp.dothtml", config);
 
+            config.RouteTable.AddWithAmp("BasicGridView", "BasicGridView", "Views/ControlSamples/GridView/BasicGridView.dothtml", config);
+            config.RouteTable.AddWithAmp("EmptyDataHidden", "EmptyDataHidden", "Views/ControlSamples/GridView/EmptyData-hidden.dothtml", config);
+            config.RouteTable.AddWithAmp("EmptyDataDisplayed", "EmptyDataDisplayed", "Views/ControlSamples/GridView/EmptyData-displayed.dothtml", config);
 
+            config.RouteTable.AddWithAmp("RepeaterNamedTemplate", "NamedTemplate", "Views/ControlSamples/Repeater/NamedTemplate.dothtml", config);
+            config.RouteTable.AddWithAmp("RepeaterNestedRepeater", "NestedRepeater", "Views/ControlSamples/Repeater/NestedRepeater.dothtml", config);
+            config.RouteTable.AddWithAmp("RepeaterRepeaterWrapperTag", "RepeaterWrapperTag", "Views/ControlSamples/Repeater/RepeaterWrapperTag.dothtml", config);
+            config.RouteTable.AddWithAmp("RepeaterSeparator", "Separator", "Views/ControlSamples/Repeater/Separator.dothtml", config);
+
+            config.RouteTable.AddWithAmp("ListboxSimple", "ListBoxSimple", "Views/ControlSamples/ListBox/ListBoxSimple.dothtml", config);
         }
 
         private void ConfigureControls(DotvvmConfiguration config, string applicationPath)
@@ -72,6 +81,7 @@ namespace TestSamples
             options.AddDotvvmAmpSupport(config =>
                 {
                     config.AttributeErrorHandlingMode = ErrorHandlingMode.LogAndIgnore;
+                    config.HtmlTagErrorHandlingMode = ErrorHandlingMode.LogAndIgnore;
                 });
             options.AddDefaultTempStorages("temp");
         }

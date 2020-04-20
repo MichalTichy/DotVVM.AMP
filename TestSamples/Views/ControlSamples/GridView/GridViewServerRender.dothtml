@@ -7,19 +7,16 @@
 <body>
     <div class="container">
         <h1>GridView with IGridViewDataSet</h1>
-        <dot:GridView DataSource="{value: CustomersDataSet}" class="table table-bordered"
-                      RenderSettings.Mode="Server">
+        <dot:GridView DataSource="{value: CustomersDataSet}">
             <Columns>
-                <!-- comment inside columns collection -->
                 <dot:GridViewTextColumn HeaderText="Id" ValueBinding="{value: CustomerId}" />
                 <dot:GridViewTextColumn HeaderText="{value: CustomNameForName}" ValueBinding="{value: Name}" />
                 <dot:GridViewTextColumn ValueBinding="{value: BirthDate}" FormatString="g">
                     <HeaderTemplate>
-                        <span class="class123">Birth date</span>
+                        <span>Birth date</span>
                     </HeaderTemplate>
                 </dot:GridViewTextColumn>
             </Columns>
-            <!-- comment inside control -->
         </dot:GridView>
         <!-- comment outside control -->
         <p>&nbsp;</p>

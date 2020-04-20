@@ -1,0 +1,20 @@
+@viewModel TestSamples.ViewModels.ControlSamples.GridView.GridViewPagingSortingViewModel, TestSamples
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Hello from DotVVM!</title>
+</head>
+<body>
+    <dot:GridView DataSource="{value: CustomersDataSet}">
+        <Columns>
+            <dot:GridViewTextColumn HeaderText="Id" ValueBinding="{value: CustomerId}" />
+            <dot:GridViewTextColumn HeaderText="{value: CustomNameForName}" ValueBinding="{value: Name}" />
+            <dot:GridViewTextColumn ValueBinding="{value: BirthDate}" FormatString="g">
+                <HeaderTemplate>
+                    <span>Birth date</span>
+                </HeaderTemplate>
+            </dot:GridViewTextColumn>
+        </Columns>
+    </dot:GridView>
+</body>
+</html>

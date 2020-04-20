@@ -1,0 +1,16 @@
+﻿@viewModel TestSamples.ViewModels.ControlSamples.ListBox.ListBoxViewModel, TestSamples
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+    <dot:ListBox DataSource="{value: List}" SelectedValue="{value: SelectedValue}" ItemTextBinding="{value: Text}" ItemTitleBinding="{value: Title}" ItemValueBinding="{value: Value}" />
+</body>
+</html>
+
+

@@ -1,0 +1,12 @@
+@viewModel TestSamples.ViewModels.ControlSamples.GridView.GridViewPagingSortingViewModel, TestSamples
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Hello from DotVVM!</title>
+</head>
+<body>
+    <dot:EmptyData DataSource="{value: EmptyCustomersDataSet}">
+        This is displayed because data is empty
+    </dot:EmptyData>
+</body>
+</html>

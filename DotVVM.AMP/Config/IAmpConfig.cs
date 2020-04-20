@@ -17,6 +17,7 @@ namespace DotVVM.AMP.Config
         public ErrorHandlingMode KnockoutErrorHandlingMode { get; set; }
         public ErrorHandlingMode HtmlTagErrorHandlingMode { get; set; }
         public ErrorHandlingMode StylesErrorHandlingMode { get; set; }
+        public ErrorHandlingMode UnsupportedControlPropertiesHandlingMode { get; set; }
 
 
         public IAmpControlTransformsRegistry ControlTransforms { get; set; }

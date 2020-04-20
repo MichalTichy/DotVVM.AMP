@@ -1,5 +1,4 @@
-﻿using System;
-using DotVVM.AMP.AmpControls;
+﻿using DotVVM.AMP.AmpControls;
 using DotVVM.AMP.Config;
 using DotVVM.Framework.Controls;
 using Microsoft.Extensions.Logging;
