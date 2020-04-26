@@ -15,22 +15,15 @@ namespace DotVVM.AMP.ControlTransforms.Transforms
         }
         protected abstract DotvvmControl CreateReplacementControl(DotvvmControl control);
 
-        public override DotvvmControl Transform(DotvvmControl control, IDotvvmRequestContext context)
+        protected override DotvvmControl TransformCore(DotvvmControl control, IDotvvmRequestContext context)
         {
             var newControl = CreateReplacementControl(control);
             TransferControlProperties(control, newControl);
-            SetRequiredSettings(control, newControl);
             ReplaceControl(control, newControl);
             return newControl;
         }
 
-        protected virtual void SetRequiredSettings(DotvvmControl sourceControl, DotvvmControl newControl)
-        {
-            newControl.SetValueRaw(RenderSettings.ModeProperty, RenderMode.Server);
-        }
-
-
-
+        
         public void ReplaceControl(DotvvmControl currentControl, DotvvmControl newControl)
         {
             var parent = currentControl.Parent as DotvvmControl;

@@ -1,8 +1,7 @@
 ﻿using DotVVM.Framework.Controls;
 using DotVVM.Framework.Hosting;
-using DotVVM.Framework.Routing;
 
-namespace DotVVM.AMP.AmpControls
+namespace DotVVM.AMP.AmpControls.Internal
 {
     public class AmpHtmlTag : HtmlGenericControl, IAmpControl
     {

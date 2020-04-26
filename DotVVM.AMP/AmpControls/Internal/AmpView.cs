@@ -1,7 +1,7 @@
 ﻿using DotVVM.Framework.Controls.Infrastructure;
 using DotVVM.Framework.Hosting;
 
-namespace DotVVM.AMP.AmpControls
+namespace DotVVM.AMP.AmpControls.Internal
 {
     public class AmpView : DotvvmView, IAmpControl
     {

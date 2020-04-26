@@ -41,7 +41,48 @@ namespace DotVVM.AMP.Validator
 
             if (!CheckForReplacedHtmlTags(tagName)) return false;
 
+            if (!CheckLayoutAttribute(attributes)) return false;
             return true;
+        }
+
+        private bool CheckLayoutAttribute(IDictionary<string, string> attributes)
+        {
+            var hasLayout = attributes.ContainsKey("layout");
+            if (!hasLayout) return true;
+
+            var hasHeight = attributes.ContainsKey("height");
+            var hasWidth = attributes.ContainsKey("width");
+
+            var layout = attributes["layout"];
+
+            var error = string.Empty;
+            if ((layout=="fixed" || layout=="responsive" || layout=="intrinsic") && (!hasHeight || !hasWidth))
+            {
+                error = $"When layout is set to {layout}, than both height and width are required!";
+            }
+            else if (layout=="fixed-height" && !hasHeight)
+            {
+                error = $"When layout is set to {layout}, than both height is required!";
+            }
+
+
+            if (!string.IsNullOrWhiteSpace(error))
+            {
+                switch (configuration.HtmlTagErrorHandlingMode)
+                {
+                    case ErrorHandlingMode.Throw:
+                        throw new AmpException(error);
+                    case ErrorHandlingMode.LogAndIgnore:
+                        logger?.LogError(error);
+                        return false;
+                    default:
+                        throw new ArgumentOutOfRangeException(
+                            $"Unsuported {nameof(configuration.HtmlTagErrorHandlingMode)}");
+                }
+            }
+
+            return true;
+
         }
 
         protected virtual bool CheckForReplacedHtmlTags(string tagName)

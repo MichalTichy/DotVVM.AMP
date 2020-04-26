@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using DotVVM.AMP.AmpControls;
+using DotVVM.AMP.AmpControls.Internal;
 using DotVVM.AMP.Config;
 using DotVVM.Framework.Controls;
 using DotVVM.Framework.Hosting;
@@ -14,7 +15,7 @@ namespace DotVVM.AMP.ControlTransforms.Transforms
             return control is HtmlGenericControl htmlGenericControl && htmlGenericControl.TagName == "head";
         }
 
-        public override DotvvmControl Transform(DotvvmControl control, IDotvvmRequestContext context)
+        protected override DotvvmControl TransformCore(DotvvmControl control, IDotvvmRequestContext context)
         {
             AddMetaCharset(control, context);
             AddLinkToOriginalPage(control, context);

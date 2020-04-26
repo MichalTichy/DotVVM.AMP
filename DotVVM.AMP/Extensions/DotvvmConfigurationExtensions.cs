@@ -1,4 +1,5 @@
-﻿using DotVVM.AMP.DotvvmResources;
+﻿using DotVVM.AMP.AmpControls;
+using DotVVM.AMP.DotvvmResources;
 using DotVVM.Framework.Configuration;
 
 namespace DotVVM.AMP.Extensions
@@ -8,6 +9,12 @@ namespace DotVVM.AMP.Extensions
         public static void AddDotvvmAmp(this DotvvmConfiguration dotvvmConfiguration)
         {
             RegisterResources(dotvvmConfiguration);
+            RegisterControls(dotvvmConfiguration);
+        }
+
+        private static void RegisterControls(DotvvmConfiguration dotvvmConfiguration)
+        {
+            dotvvmConfiguration.Markup.AddCodeControls("amp",typeof(Amp));
         }
 
         private static void RegisterResources(DotvvmConfiguration dotvvmConfiguration)

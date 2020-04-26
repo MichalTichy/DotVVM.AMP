@@ -87,26 +87,17 @@
     </noscript>
 </head>
 <body>
-    <table>
-        <tbody>
-            <tr>
-                <td>
-
-                    <h1>Server Rendering</h1>
-
-                    <fieldset>
-                        <legend>Literal Text=binding, FormatString=null, RenderWrapperTag=true</legend>
-                        <div>Hello <b>value</b></div>
-                    </fieldset>
-
-                    <fieldset>
-                        <legend>Literal Text=binding, FormatString=null, RenderWrapperTag=false</legend>
-                        Hello <b>value</b>
-                    </fieldset>
-
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<amp-img alt="Mountains"
+         width="550"
+         height="368"
+         layout="responsive"
+         src="https://picsum.photos/200/300">
+    <amp-img alt="Mountains"
+             fallback
+             width="550"
+             height="368"
+             layout="responsive"
+             src="https://picsum.photos/200/301"></amp-img>
+</amp-img>
 </body>
 </html>

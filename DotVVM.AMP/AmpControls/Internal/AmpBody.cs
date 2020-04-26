@@ -1,10 +1,9 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using DotVVM.Framework.Controls;
 using DotVVM.Framework.Hosting;
 using DotVVM.Framework.ResourceManagement;
 
-namespace DotVVM.AMP.AmpControls
+namespace DotVVM.AMP.AmpControls.Internal
 {
     public class AmpBody : HtmlGenericControl
     {

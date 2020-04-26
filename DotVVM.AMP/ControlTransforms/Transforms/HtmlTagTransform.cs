@@ -1,5 +1,6 @@
 ﻿using System;
 using DotVVM.AMP.AmpControls;
+using DotVVM.AMP.AmpControls.Internal;
 using DotVVM.AMP.Config;
 using DotVVM.AMP.Routing;
 using DotVVM.Framework.Controls;

@@ -20,7 +20,7 @@ namespace DotVVM.AMP.ControlTransforms.Transforms
                    genericControl.Attributes.Any(a => a.Key == "rel" && (string) a.Value == "stylesheet") && genericControl.Attributes.Any(a=>a.Key=="href" && a.Value is string);
         }
 
-        public override DotvvmControl Transform(DotvvmControl control, IDotvvmRequestContext context)
+        protected override DotvvmControl TransformCore(DotvvmControl control, IDotvvmRequestContext context)
         {
             var genericControl = control as HtmlGenericControl;
             RemoveControlFromParent(control);

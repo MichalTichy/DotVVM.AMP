@@ -1,10 +1,9 @@
 ﻿using System;
 using DotVVM.Framework.Binding;
-using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Controls;
 using DotVVM.Framework.Hosting;
 
-namespace DotVVM.AMP.AmpControls
+namespace DotVVM.AMP.AmpControls.Internal
 {
     public class AmpRouteLink : HtmlGenericControl, IAmpControl
     {

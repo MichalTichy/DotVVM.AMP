@@ -60,6 +60,8 @@ namespace TestSamples
             config.RouteTable.AddWithAmp("RepeaterSeparator", "Separator", "Views/ControlSamples/Repeater/Separator.dothtml", config);
 
             config.RouteTable.AddWithAmp("ListboxSimple", "ListBoxSimple", "Views/ControlSamples/ListBox/ListBoxSimple.dothtml", config);
+            
+            config.RouteTable.AddWithAmp("img", "img", "Views/ControlSamples/Image/Simple.dothtml", config);
         }
 
         private void ConfigureControls(DotvvmConfiguration config, string applicationPath)

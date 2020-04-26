@@ -19,14 +19,13 @@ namespace DotVVM.AMP.ControlTransforms.Transforms
             return control is HtmlGenericControl genericControl && genericControl.TagName == "style" && genericControl.Children.SingleOrDefault(t=>t is RawLiteral) !=null;
         }
 
-        public override DotvvmControl Transform(DotvvmControl control, IDotvvmRequestContext context)
+        protected override DotvvmControl TransformCore(DotvvmControl control, IDotvvmRequestContext context)
         {
             RemoveControlFromParent(control);
 
             var styleText = control.Children.OfType<RawLiteral>().Single().UnencodedText;
             var inlineResource = new InlineStylesheetResource(styleText);
-            //TODO register resource
-            //waiting for https://github.com/riganti/dotvvm/pull/819
+            context.ResourceManager.AddRequiredResource(inlineResource);
             return null;
         }
 

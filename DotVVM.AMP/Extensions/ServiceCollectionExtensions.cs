@@ -24,13 +24,15 @@ namespace DotVVM.AMP.Extensions
             serviceCollection.Services.AddSingleton<IAmpValidator, AmpValidator>();
             serviceCollection.Services.AddSingleton<IAmpRouteManager, AmpRouteManager>();
             serviceCollection.Services.AddSingleton<IAmpStylesheetResourceCollection, AmpStylesheetResourceCollection>();
+            serviceCollection.Services.AddSingleton<IAmpExternalResourceMetadataCache, AmpExternalResourceMetadataCache>();
             
             serviceCollection.Services.AddSingleton<DotvvmAmpConfiguration>(provider =>
             {
                 var registry = provider.GetService<IAmpControlTransformsRegistry>();
                 var routeManager = provider.GetService<IAmpRouteManager>();
                 var logger = provider.GetService<ILogger>();
-                var config = new DotvvmAmpConfiguration(registry, routeManager);
+                var externalResourceMetadataCache = provider.GetService<IAmpExternalResourceMetadataCache>();
+                var config = new DotvvmAmpConfiguration(registry, routeManager,externalResourceMetadataCache);
                 RegisterTransforms(config, logger);
                 modifyConfiguration?.Invoke(config);
                 return config;
@@ -39,6 +41,8 @@ namespace DotVVM.AMP.Extensions
 
         private static void RegisterTransforms(DotvvmAmpConfiguration configuration, ILogger logger)
         {
+            configuration.ControlTransforms.Register(new AllControlTransform(configuration, logger));
+
             configuration.ControlTransforms.Register(new DotvvmViewTransform(configuration, logger));
             configuration.ControlTransforms.Register(new HtmlTagTransform(configuration, logger));
             configuration.ControlTransforms.Register(new HeadTagTransform(configuration, logger));
@@ -49,6 +53,8 @@ namespace DotVVM.AMP.Extensions
             configuration.ControlTransforms.Register(new GridViewColumnTransform(configuration,logger));
             configuration.ControlTransforms.Register(new GridViewTextColumnTransform(configuration,logger));
             configuration.ControlTransforms.Register(new GridViewTemplateColumnTransform(configuration,logger));
+            configuration.ControlTransforms.Register(new AmpLayoutTransform(configuration,logger));
+            configuration.ControlTransforms.Register(new AmpImageTransform(configuration,logger));
 
         }
     }

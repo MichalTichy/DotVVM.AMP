@@ -40,7 +40,7 @@ namespace DotVVM.AMP.ControlTransforms.Transforms
 
         }
 
-        public override DotvvmControl Transform(DotvvmControl control, IDotvvmRequestContext context)
+        protected override DotvvmControl TransformCore(DotvvmControl control, IDotvvmRequestContext context)
         {
             var gridView = control as TControl;
             ValidateControl(gridView, context);

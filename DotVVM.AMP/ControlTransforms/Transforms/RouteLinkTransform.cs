@@ -1,4 +1,5 @@
 ﻿using DotVVM.AMP.AmpControls;
+using DotVVM.AMP.AmpControls.Internal;
 using DotVVM.AMP.Config;
 using DotVVM.Framework.Controls;
 using Microsoft.Extensions.Logging;
@@ -13,7 +14,7 @@ namespace DotVVM.AMP.ControlTransforms.Transforms
 
         public override bool CanTransform(DotvvmControl control)
         {
-            return control is RouteLink;
+            return control is Framework.Controls.RouteLink;
         }
 
         protected override DotvvmControl CreateReplacementControl(DotvvmControl control)

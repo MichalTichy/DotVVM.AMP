@@ -1,0 +1,13 @@
+﻿@viewModel TestSamples.ViewModels.SimplePages.EmptyViewModel, TestSamples
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+</head>
+<body>
+    <img src="/Images/test.jpg" alt="test" Image.Attribution="ATTRIBUTION" />
+</body>
+</html>
+
+

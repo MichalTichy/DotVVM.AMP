@@ -8,7 +8,7 @@ using DotVVM.Framework.Controls;
 using DotVVM.Framework.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace DotVVM.AMP.AmpControls
+namespace DotVVM.AMP.AmpControls.Internal
 {
     public class AmpMetaViewport : HtmlGenericControl, IAmpControl
     {
