@@ -1,4 +1,4 @@
-﻿namespace DotVVM.AMP.Config
+﻿namespace DotVVM.AMP.ExternalResourceManager
 {
     public class ExternalResourceMetatada
     {

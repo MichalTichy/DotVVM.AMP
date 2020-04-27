@@ -1,6 +1,7 @@
 ﻿using DotVVM.AMP.ControlTransforms;
 using DotVVM.AMP.Enums;
 using DotVVM.AMP.Extensions;
+using DotVVM.AMP.ExternalResourceManager;
 using DotVVM.AMP.Routing;
 
 namespace DotVVM.AMP.Config

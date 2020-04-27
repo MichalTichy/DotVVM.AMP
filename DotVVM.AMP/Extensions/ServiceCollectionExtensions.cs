@@ -9,6 +9,7 @@ using DotVVM.AMP.ViewBuilder;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using DotVVM.AMP.DotvvmResources;
+using DotVVM.AMP.ExternalResourceManager;
 using Microsoft.Extensions.Logging;
 
 namespace DotVVM.AMP.Extensions
@@ -55,6 +56,7 @@ namespace DotVVM.AMP.Extensions
             configuration.ControlTransforms.Register(new GridViewTemplateColumnTransform(configuration,logger));
             configuration.ControlTransforms.Register(new AmpLayoutTransform(configuration,logger));
             configuration.ControlTransforms.Register(new AmpImageTransform(configuration,logger));
+            configuration.ControlTransforms.Register(new AmpDecoratorTransform(configuration,logger));
 
         }
     }

@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using DotVVM.AMP.Config;
 using DotVVM.Framework.Hosting;
 
-namespace DotVVM.AMP.Config
+namespace DotVVM.AMP.ExternalResourceManager
 {
     public interface IAmpExternalResourceMetadataCache
     {

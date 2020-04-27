@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 using DotVVM.AMP.AmpControls;
 using DotVVM.AMP.Config;
 using DotVVM.AMP.Enums;
@@ -25,12 +27,28 @@ namespace DotVVM.AMP.ControlTransforms.Transforms
 
         public DotvvmControl Transform(DotvvmControl control, IDotvvmRequestContext context)
         {
+            if (!ShouldBeRendered(control,context))
+            {
+                RemoveControlFromTree(control);
+                return null;
+            }
             BeforeTransform(control,context);
             var finalControl = TransformCore(control, context);
             SetRequiredSettings(finalControl,context);
             ApplyAttachedProperties(control, context);
             AfterTransform(finalControl,context);
             return finalControl;
+        }
+
+        protected virtual bool ShouldBeRendered(DotvvmControl control, IDotvvmRequestContext context)
+        {
+            return !control.IsPropertySet(Amp.ExcludeProperty) || control.GetValue<bool>(Amp.ExcludeProperty);
+        }
+
+        protected virtual void RemoveControlFromTree(DotvvmControl control)
+        {
+            var parent = control.Parent as DotvvmControl;
+            parent?.Children.Remove(control);
         }
 
         protected virtual void BeforeTransform(DotvvmControl control, IDotvvmRequestContext context)

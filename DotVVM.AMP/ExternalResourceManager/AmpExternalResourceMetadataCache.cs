@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Drawing;
 using System.Net;
+using DotVVM.AMP.ExternalResourceManager;
 using DotVVM.Framework.Hosting;
 
 namespace DotVVM.AMP.Config

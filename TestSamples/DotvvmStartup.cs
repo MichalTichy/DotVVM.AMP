@@ -62,6 +62,9 @@ namespace TestSamples
             config.RouteTable.AddWithAmp("ListboxSimple", "ListBoxSimple", "Views/ControlSamples/ListBox/ListBoxSimple.dothtml", config);
             
             config.RouteTable.AddWithAmp("img", "img", "Views/ControlSamples/Image/Simple.dothtml", config);
+
+            config.RouteTable.AddWithAmp("include","include", "Views/ControlSamples/IncludeExclude/Include.dothtml", config);
+            config.RouteTable.AddWithAmp("exclude","exclude", "Views/ControlSamples/IncludeExclude/Exclude.dothtml", config);
         }
 
         private void ConfigureControls(DotvvmConfiguration config, string applicationPath)
