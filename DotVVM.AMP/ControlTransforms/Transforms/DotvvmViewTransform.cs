@@ -23,11 +23,6 @@ namespace DotVVM.AMP.ControlTransforms.Transforms
             ampView.ViewModelType = dotvvmView.ViewModelType;
         }
 
-        protected override bool ShouldTransferDotvvmProperties(DotvvmControl source, DotvvmControl target)
-        {
-            return true;
-        }
-
         public override bool CanTransform(DotvvmControl control)
         {
             return control is DotvvmView;

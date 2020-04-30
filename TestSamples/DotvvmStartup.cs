@@ -49,6 +49,7 @@ namespace TestSamples
             config.RouteTable.AddWithAmp("LinkToNonAmpPage", "LinkToNonAmpPage", "Views/ControlSamples/RouteLink/LinkToNonAmpPage.dothtml", config);
             config.RouteTable.AddWithAmp("RouteLinkUrlGen", "RouteLinkUrlGen", "Views/ControlSamples/RouteLink/RouteLinkUrlGen.dothtml", config);
             config.RouteTable.AddWithAmp("RouteLinkUrlGenToAmp", "RouteLinkUrlGenToAmp", "Views/ControlSamples/RouteLink/RouteLinkUrlGenToAmp.dothtml", config);
+            config.RouteTable.AddWithAmp("RouteLinkUrlGenBinding", "RouteLinkUrlGenBinding", "Views/ControlSamples/RouteLink/RouteLinkUrlGenBinding.dothtml", config);
 
             config.RouteTable.AddWithAmp("BasicGridView", "BasicGridView", "Views/ControlSamples/GridView/BasicGridView.dothtml", config);
             config.RouteTable.AddWithAmp("EmptyDataHidden", "EmptyDataHidden", "Views/ControlSamples/GridView/EmptyData-hidden.dothtml", config);

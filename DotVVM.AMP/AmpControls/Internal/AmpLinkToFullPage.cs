@@ -1,4 +1,5 @@
-﻿using DotVVM.Framework.Controls;
+﻿using System.Linq;
+using DotVVM.Framework.Controls;
 using DotVVM.Framework.Hosting;
 using DotVVM.Framework.Routing;
 
@@ -18,9 +19,21 @@ namespace DotVVM.AMP.AmpControls.Internal
         protected override void AddAttributesToRender(IHtmlWriter writer, IDotvvmRequestContext context)
         {
             writer.AddAttribute("rel", "canonical");
-            var urlWithDefault= ampPageRoute.BuildUrl(ampPageRoute.DefaultValues);
-            var urlWithCurrent = ampPageRoute.BuildUrl(context.Parameters);
-            var isDefault = urlWithDefault == urlWithCurrent;
+            var ampPageHasDefaults = ampPageRoute.DefaultValues.Any();
+            var fullPageHasDefaults = fullPageRoute.DefaultValues.Any();
+            bool isDefault;
+
+            if (!fullPageHasDefaults)
+            {
+                isDefault = !context.Parameters.Any();
+            }
+            else
+            {
+                var urlWithDefault = ampPageRoute.BuildUrl(ampPageRoute.DefaultValues);
+                var urlWithCurrent = ampPageRoute.BuildUrl(context.Parameters);
+                isDefault = urlWithDefault == urlWithCurrent;
+
+            }
             var urlFullPage= isDefault ?
                 fullPageRoute.BuildUrl(fullPageRoute.DefaultValues) :
                 fullPageRoute.BuildUrl(context.Parameters);

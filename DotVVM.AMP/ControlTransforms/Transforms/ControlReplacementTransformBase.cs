@@ -44,17 +44,8 @@ namespace DotVVM.AMP.ControlTransforms.Transforms
 
         protected virtual void TransferControlProperties(DotvvmControl source, DotvvmControl target)
         {
-            TransferHtmlAttributes(source, target);
-
-            if (ShouldTransferDotvvmProperties(source, target))
-            {
-                TransferDotvvmProperties(source, target);
-            }
-        }
-
-        protected virtual bool ShouldTransferDotvvmProperties(DotvvmControl source, DotvvmControl target)
-        {
-            return target.GetType().IsSubclassOf(source.GetType());
+            TransferHtmlAttributes(source, target); 
+            TransferDotvvmProperties(source, target);
         }
 
         protected virtual void TransferHtmlAttributes(DotvvmControl source, DotvvmControl target)

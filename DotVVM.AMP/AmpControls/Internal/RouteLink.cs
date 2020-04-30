@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using DotVVM.Framework.Binding;
 using DotVVM.Framework.Controls;
 using DotVVM.Framework.Hosting;
@@ -51,10 +52,13 @@ namespace DotVVM.AMP.AmpControls.Internal
         public AmpRouteLink(RouteLink originalRouteLink) : base("a")
         {
             this.originalRouteLink = originalRouteLink;
+
         }
 
         protected override void AddAttributesToRender(IHtmlWriter writer, IDotvvmRequestContext context)
         {
+            originalRouteLink.Parent = this.Parent;
+
             var url = RouteLinkHelpers.EvaluateRouteUrl(RouteName,originalRouteLink,context);
 
             if (!Enabled)

@@ -28,10 +28,10 @@ namespace DotVVM.AMP.ControlTransforms.Transforms
         protected override void AfterTransform(DotvvmControl finalControl, IDotvvmRequestContext context)
         {
             var image = finalControl as Image;
-            var doesNotHaveHeightOrWidth = image != null &&
-                                           (!image.Attributes.ContainsKey("height") || string.IsNullOrWhiteSpace((string)image.Attributes["height"])) &&
-                                           (!image.Attributes.ContainsKey("width") || string.IsNullOrWhiteSpace((string)image.Attributes["width"]));
-            if (doesNotHaveHeightOrWidth)
+            var doesHaveHeightOrWidthSet = image != null && (
+                (image.Attributes.ContainsKey("height") && !string.IsNullOrWhiteSpace((string)image.Attributes["height"]) || image.IsPropertySet(AmpControl.HeightProperty) && !string.IsNullOrWhiteSpace(image.GetValue<string>(AmpControl.HeightProperty))) ||
+                (image.Attributes.ContainsKey("width") && !string.IsNullOrWhiteSpace((string)image.Attributes["width"]) || image.IsPropertySet(AmpControl.WidthProperty) && !string.IsNullOrWhiteSpace(image.GetValue<string>(AmpControl.WidthProperty))));
+            if (!doesHaveHeightOrWidthSet)
             {
                 if (AmpConfiguration.TryToDetermineExternalResourceDimensions)
                 {

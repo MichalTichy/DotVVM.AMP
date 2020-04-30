@@ -1,0 +1,10 @@
+﻿@viewModel TestSamples.ViewModels.ControlSamples.RouteLink.RouteLinkUrlGenViewModel
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+</head>
+<body>    
+    <dot:RouteLink Param-Id="{value: RouteParameter}" RouteName="TestRoute" Text="Optional parameter present" RenderSettings.Mode="Server" />
+</body>
+</html>

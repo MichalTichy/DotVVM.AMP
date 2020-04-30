@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Drawing;
 using System.Net;
 using DotVVM.AMP.ExternalResourceManager;
+using DotVVM.AMP.Validator;
 using DotVVM.Framework.Hosting;
 
 namespace DotVVM.AMP.Config
@@ -17,27 +18,36 @@ namespace DotVVM.AMP.Config
 
         protected virtual ExternalResourceMetatada GetMetadata(string location, IHttpContext context)
         {
-            bool isAbsolute = Uri.IsWellFormedUriString(location,UriKind.Absolute);
-            Uri loc;
-            if (isAbsolute)
+            try
             {
-                loc = new Uri(location);
-            }
-            else
-            {
-                var request = context.Request;
-                var basePath = context.Request.Url.GetLeftPart(UriPartial.Authority);
-                loc = new Uri(new Uri(basePath), location);
-            }
 
-            using (var response = WebRequest.Create(loc).GetResponse().GetResponseStream())
-            {
-                var image = Image.FromStream(response);
-                return new ExternalResourceMetatada()
+                bool isAbsolute = Uri.IsWellFormedUriString(location, UriKind.Absolute);
+                Uri loc;
+                if (isAbsolute)
                 {
-                    Width = image.Width,
-                    Height = image.Height
-                };
+                    loc = new Uri(location);
+                }
+                else
+                {
+                    var request = context.Request;
+                    var basePath = request.Url.GetLeftPart(UriPartial.Authority);
+                    loc = new Uri(basePath + (request.PathBase.HasValue() ? request.PathBase.Value : string.Empty) + location.Replace("~", ""));
+                }
+
+                using (var response = WebRequest.Create(loc).GetResponse().GetResponseStream())
+                {
+                    var image = Image.FromStream(response);
+                    return new ExternalResourceMetatada()
+                    {
+                        Width = image.Width,
+                        Height = image.Height
+                    };
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw new AmpException($"Unable to get matadata for {location}",e);
             }
         }
     }
