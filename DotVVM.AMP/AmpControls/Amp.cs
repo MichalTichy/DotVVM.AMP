@@ -30,7 +30,8 @@ namespace DotVVM.AMP.AmpControls
             DotvvmProperty.Register<bool, Amp>(() => PlaceholderProperty, false);
 
         [AttachedProperty(typeof(bool))]
+        [MarkupOptions(AllowBinding = false)]
         public static readonly DotvvmProperty ExcludeProperty =
-            DotvvmProperty.Register<bool, Amp>(() => ExcludeProperty, false);
+            DotvvmProperty.Register<bool, Amp>(() => ExcludeProperty, true);
     }
 }

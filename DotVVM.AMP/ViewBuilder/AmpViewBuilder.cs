@@ -22,7 +22,7 @@ namespace DotVVM.AMP.ViewBuilder
             var allControls = view.GetThisAndAllDescendants().ToList();
 
             view = (DotvvmView)(transformsRegistry.GetTransform(view)?.Transform(view, context) ?? view);
-
+            
             foreach (var control in allControls)
             {
                 transformsRegistry.GetTransform(control)?.Transform(control, context);

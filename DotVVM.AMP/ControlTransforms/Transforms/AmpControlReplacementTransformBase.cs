@@ -2,6 +2,7 @@
 using DotVVM.AMP.Config;
 using DotVVM.AMP.Enums;
 using DotVVM.Framework.Controls;
+using DotVVM.Framework.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace DotVVM.AMP.ControlTransforms.Transforms
@@ -10,6 +11,13 @@ namespace DotVVM.AMP.ControlTransforms.Transforms
     {
         protected AmpControlReplacementTransformBase(DotvvmAmpConfiguration ampConfiguration, ILogger logger = null) : base(ampConfiguration, logger)
         {
+        }
+
+        protected override void AfterTransform(DotvvmControl finalControl, IDotvvmRequestContext context)
+        {
+            if (finalControl is AmpControl ampControl)
+                ampControl.AmpConfiguration = AmpConfiguration;
+            base.AfterTransform(finalControl, context);
         }
 
         protected override void TransferControlProperties(DotvvmControl source, DotvvmControl target)

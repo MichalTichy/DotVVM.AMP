@@ -256,7 +256,7 @@ namespace DotVVM.AMP.Validator
                     case ErrorHandlingMode.LogAndIgnore:
                         foreach (var error in errors)
                         {
-                            logger.LogError(error);
+                            logger?.LogError(error);
                             return false;
                         }
                         break;
@@ -279,7 +279,7 @@ namespace DotVVM.AMP.Validator
         {
             if (IgnoredBindings.Contains(name))
             {
-                logger.LogWarning($"{name} binding is ignored");
+                logger?.LogWarning($"{name} binding is ignored");
                 return false;
             }
             
@@ -290,7 +290,7 @@ namespace DotVVM.AMP.Validator
                 case ErrorHandlingMode.Throw:
                     throw new AmpException(errorMessage);
                 case ErrorHandlingMode.LogAndIgnore:
-                    logger.LogError(errorMessage);
+                    logger?.LogError(errorMessage);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

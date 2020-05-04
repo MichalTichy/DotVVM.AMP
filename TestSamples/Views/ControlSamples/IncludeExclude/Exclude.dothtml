@@ -6,6 +6,10 @@
 <head>
 </head>
 <body>
+    <div Amp.Exclude="true">
+        THIS IS NOT VISIBLE IN AMP PAGES.
+
+    </div>
     <amp:Exclude>
         THIS IS NOT VISIBLE IN AMP PAGES.
     </amp:Exclude>

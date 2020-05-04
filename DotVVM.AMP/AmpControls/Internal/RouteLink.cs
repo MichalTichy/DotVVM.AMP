@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using DotVVM.AMP.Config;
 using DotVVM.Framework.Binding;
 using DotVVM.Framework.Controls;
 using DotVVM.Framework.Hosting;
@@ -55,10 +56,12 @@ namespace DotVVM.AMP.AmpControls.Internal
 
         }
 
+        public DotvvmAmpConfiguration Config { get; set; }
         protected override void AddAttributesToRender(IHtmlWriter writer, IDotvvmRequestContext context)
         {
             originalRouteLink.Parent = this.Parent;
 
+            RouteName = Config.AmpRouteManager.GetAmpPageRouteName(originalRouteLink.RouteName);
             var url = RouteLinkHelpers.EvaluateRouteUrl(RouteName,originalRouteLink,context);
 
             if (!Enabled)
@@ -69,6 +72,12 @@ namespace DotVVM.AMP.AmpControls.Internal
             {
                 writer.AddAttribute("href",url);
             }
+            base.AddAttributesToRender(writer, context);
+        }
+
+        protected override void RenderBeginTag(IHtmlWriter writer, IDotvvmRequestContext context)
+        {
+            base.RenderBeginTag(writer, context);
         }
 
         protected override void RenderContents(IHtmlWriter writer, IDotvvmRequestContext context)
@@ -83,5 +92,6 @@ namespace DotVVM.AMP.AmpControls.Internal
                 writer.WriteText(Text);
             }
         }
+
     }
 }

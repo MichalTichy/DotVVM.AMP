@@ -31,11 +31,20 @@ namespace DotVVM.AMP.Writer
 
         public virtual void AddAttribute(string name, string value, bool append = false, string appendSeparator = null)
         {
-            if (validator.CheckAttribute(name, value))
+            if (!validator.CheckAttribute(name, value)) return;
+
+            if (Attributes.ContainsKey(name))
+            {
+                if (append)
+                    Attributes[name] += appendSeparator ?? string.Empty + value;
+                else
+                    Attributes[name] = value;
+            }
+            else
             {
                 Attributes.Add(name,value);
-                writer.AddAttribute(name, value, append, appendSeparator);
             }
+            writer.AddAttribute(name, value, append, appendSeparator);
         }
 
         public virtual void AddStyleAttribute(string name, string value)

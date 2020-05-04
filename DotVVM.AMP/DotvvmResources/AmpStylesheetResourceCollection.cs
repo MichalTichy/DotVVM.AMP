@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using DotVVM.AMP.Config;
 using DotVVM.AMP.Validator;
 using DotVVM.Framework.Hosting;
 using DotVVM.Framework.ResourceManagement;
@@ -16,10 +17,12 @@ namespace DotVVM.AMP.DotvvmResources
     public class AmpStylesheetResourceCollection : IAmpStylesheetResourceCollection
     {
         private readonly IAmpValidator ampValidator;
+        private readonly DotvvmAmpConfiguration configuration;
 
-        public AmpStylesheetResourceCollection(IAmpValidator ampValidator)
+        public AmpStylesheetResourceCollection(IAmpValidator ampValidator,DotvvmAmpConfiguration configuration)
         {
             this.ampValidator = ampValidator;
+            this.configuration = configuration;
         }
         public List<IResourceLocation> resources = new List<IResourceLocation>();
         protected bool Modified = false;
@@ -48,7 +51,7 @@ namespace DotVVM.AMP.DotvvmResources
                 await ProcessCss(context);
             }
 
-            return ampCustomCode;
+            return ampKeyFramesCode;
         }
 
 
@@ -83,7 +86,8 @@ namespace DotVVM.AMP.DotvvmResources
                 using (Stream stream = web.OpenRead(result))
                 using (var reader = new StreamReader(stream ?? throw new ArgumentException($"Unable to load resource at {resource}")))
                 {
-                    return await reader.ReadToEndAsync();
+                    var readToEnd = reader.ReadToEnd();
+                    return await Task.FromResult(readToEnd);
                 }
             }
         }
@@ -112,7 +116,7 @@ namespace DotVVM.AMP.DotvvmResources
 
         private async Task ProcessCss(IDotvvmRequestContext context)
         {
-
+            Modified = false;
             var getCodeTasks = resources.Select(t => GetCode(t, context)).ToArray();
             Task.WaitAll(getCodeTasks);
             var strings = getCodeTasks.Select(t => t.Result).ToArray();
@@ -127,7 +131,7 @@ namespace DotVVM.AMP.DotvvmResources
 
             CheckStyleCodeForPrematureEnding(code);
 
-            var parser = new ExCSS.StylesheetParser();
+            var parser = new ExCSS.StylesheetParser(true,true,true,true,true);
             var stylesheet = await parser.ParseAsync(code);
 
             var styleRules=new StringBuilder();
@@ -136,6 +140,13 @@ namespace DotVVM.AMP.DotvvmResources
 
             foreach (var styleRule in stylesheet.StyleRules.OfType<IStyleRule>())
             {
+                if (configuration.StyleRemoveForbiddenImportant)
+                {
+                    foreach (var property in styleRule.Children.OfType<StyleDeclaration>().SelectMany(t=>t.Children).OfType<Property>())
+                    {
+                        property.IsImportant = false;
+                    }
+                }
                 styleRules.Append(styleRule.ToCss());
             }
 

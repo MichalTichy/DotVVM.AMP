@@ -6,24 +6,21 @@ using Microsoft.Extensions.Logging;
 
 namespace DotVVM.AMP.ControlTransforms.Transforms
 {
-    public class RouteLinkTransform : ControlReplacementTransformBase
+    public class RepeaterTransform : ControlReplacementTransformBase
     {
-        public RouteLinkTransform(DotvvmAmpConfiguration ampConfiguration, ILogger logger) : base(ampConfiguration, logger)
+        public RepeaterTransform(DotvvmAmpConfiguration ampConfiguration, ILogger logger) : base(ampConfiguration, logger)
         {
         }
 
         public override bool CanTransform(DotvvmControl control)
         {
-            return control is Framework.Controls.RouteLink;
+            return control is Repeater;
         }
 
         protected override DotvvmControl CreateReplacementControl(DotvvmControl control)
         {
-            var routeLink = control as RouteLink;
-            return new AmpRouteLink(routeLink)
-            {
-                Config = AmpConfiguration
-            };
+            return new AmpRepeater(AmpConfiguration.ControlTransforms);
         }
     }
+
 }

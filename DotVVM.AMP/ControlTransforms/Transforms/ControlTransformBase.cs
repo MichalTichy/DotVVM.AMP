@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using DotVVM.AMP.AmpControls;
+using DotVVM.AMP.AmpControls.Decorators;
 using DotVVM.AMP.Config;
 using DotVVM.AMP.Enums;
 using DotVVM.AMP.Validator;
@@ -34,6 +35,10 @@ namespace DotVVM.AMP.ControlTransforms.Transforms
             }
             BeforeTransform(control,context);
             var finalControl = TransformCore(control, context);
+
+            if (finalControl==null)
+                return null;
+
             SetRequiredSettings(finalControl,context);
             ApplyAttachedProperties(control, context);
             AfterTransform(finalControl,context);
@@ -42,7 +47,7 @@ namespace DotVVM.AMP.ControlTransforms.Transforms
 
         protected virtual bool ShouldBeRendered(DotvvmControl control, IDotvvmRequestContext context)
         {
-            return !control.IsPropertySet(Amp.ExcludeProperty) || control.GetValue<bool>(Amp.ExcludeProperty);
+            return !control.IsPropertySet(Amp.ExcludeProperty) || !control.GetValue<bool>(Amp.ExcludeProperty);
         }
 
         protected virtual void RemoveControlFromTree(DotvvmControl control)

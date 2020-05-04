@@ -5,10 +5,12 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <dot:RequiredResource Name="dependedStyles" />
+    <dot:RequiredResource Name="dependedStyles2" />
 </head>
 <body>
     <div ID="blue"/>
     <div ID="red"/>
+    <div ID="green"/>
 </body>
 </html>
 

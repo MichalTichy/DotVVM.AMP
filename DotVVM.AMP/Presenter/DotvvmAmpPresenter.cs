@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using DotVVM.AMP.DotvvmResources;
 using DotVVM.AMP.Renderers;
 using DotVVM.AMP.Validator;
@@ -14,18 +15,16 @@ namespace DotVVM.AMP.Presenter
 {
     public class DotvvmAmpPresenter : DotvvmPresenter, IAmpPresenter
     {
-        private readonly DotvvmConfiguration _configuration;
-        private readonly IAmpStylesheetResourceCollection _ampStylesheetResourceCollection;
+        private readonly Func<IAmpStylesheetResourceCollection> ampStylesheetResourceCollectionFactory;
 
-        public DotvvmAmpPresenter(DotvvmConfiguration configuration,IAmpStylesheetResourceCollection ampStylesheetResourceCollection, IAmpDotvvmViewBuilder viewBuilder, IViewModelLoader viewModelLoader, IViewModelSerializer viewModelSerializer, IAmpOutputRenderer outputRender, ICsrfProtector csrfProtector, IViewModelParameterBinder viewModelParameterBinder, IStaticCommandServiceLoader staticCommandServiceLoader) : base(configuration, viewBuilder, viewModelLoader, viewModelSerializer, outputRender, csrfProtector, viewModelParameterBinder, staticCommandServiceLoader)
+        public DotvvmAmpPresenter(DotvvmConfiguration configuration,Func<IAmpStylesheetResourceCollection> ampStylesheetResourceCollectionFactory, IAmpDotvvmViewBuilder viewBuilder, IViewModelLoader viewModelLoader, IViewModelSerializer viewModelSerializer, IAmpOutputRenderer outputRender, ICsrfProtector csrfProtector, IViewModelParameterBinder viewModelParameterBinder, IStaticCommandServiceLoader staticCommandServiceLoader) : base(configuration, viewBuilder, viewModelLoader, viewModelSerializer, outputRender, csrfProtector, viewModelParameterBinder, staticCommandServiceLoader)
         {
-            _configuration = configuration;
-            _ampStylesheetResourceCollection = ampStylesheetResourceCollection;
+            this.ampStylesheetResourceCollectionFactory = ampStylesheetResourceCollectionFactory;
         }
 
         public async Task ProcessRequest(IDotvvmRequestContext context)
         {
-            context.ResourceManager.RegisterProcessor(new AmpCustomCssResourceProcessor(_ampStylesheetResourceCollection,_configuration.Resources));
+            context.ResourceManager.RegisterProcessor(new AmpCustomCssResourceProcessor(ampStylesheetResourceCollectionFactory));
             context.ResourceManager.RegisterProcessor(new AmpResourcesProcessor());
             await base.ProcessRequest(context);
         }

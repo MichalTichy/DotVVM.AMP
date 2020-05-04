@@ -16,6 +16,13 @@ namespace DotVVM.AMP.Extensions
 {
     public static class ServiceCollectionExtensions
     {
+        public static void AddFactory<TService, TImplementation>(this IServiceCollection services)
+            where TService : class
+            where TImplementation : class, TService
+        {
+            services.AddTransient<TService, TImplementation>();
+            services.AddSingleton<Func<TService>>(x => () => x.GetService<TService>());
+        }
         public static void AddDotvvmAmpSupport(this IDotvvmServiceCollection serviceCollection, Action<DotvvmAmpConfiguration> modifyConfiguration = null)
         {
             serviceCollection.Services.AddSingleton<IAmpPresenter, DotvvmAmpPresenter>();
@@ -24,7 +31,7 @@ namespace DotVVM.AMP.Extensions
             serviceCollection.Services.AddSingleton<IAmpControlTransformsRegistry, AmpControlTransformsRegistry>();
             serviceCollection.Services.AddSingleton<IAmpValidator, AmpValidator>();
             serviceCollection.Services.AddSingleton<IAmpRouteManager, AmpRouteManager>();
-            serviceCollection.Services.AddSingleton<IAmpStylesheetResourceCollection, AmpStylesheetResourceCollection>();
+            serviceCollection.Services.AddFactory<IAmpStylesheetResourceCollection, AmpStylesheetResourceCollection>();
             serviceCollection.Services.AddSingleton<IAmpExternalResourceMetadataCache, AmpExternalResourceMetadataCache>();
             
             serviceCollection.Services.AddSingleton<DotvvmAmpConfiguration>(provider =>
@@ -57,6 +64,7 @@ namespace DotVVM.AMP.Extensions
             configuration.ControlTransforms.Register(new AmpLayoutTransform(configuration,logger));
             configuration.ControlTransforms.Register(new AmpImageTransform(configuration,logger));
             configuration.ControlTransforms.Register(new AmpDecoratorTransform(configuration,logger));
+            configuration.ControlTransforms.Register(new RepeaterTransform(configuration,logger));
 
         }
     }

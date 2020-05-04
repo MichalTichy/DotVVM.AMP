@@ -79,7 +79,10 @@ namespace TestSamples
             config.Resources.Register("styles2", new StylesheetResource(new UrlResourceLocation("Resources/styles2.css")));
             config.Resources.Register("dependedStyles",
                 new StylesheetResource(new UrlResourceLocation("Resources/styles.css"))
-                    {Dependencies = new[] {"styles2"}});
+                    { Dependencies = new[] { "styles2" } });
+            config.Resources.Register("dependedStyles2",
+                new StylesheetResource(new UrlResourceLocation("Resources/styles3.css"))
+                    { Dependencies = new[] { "styles2" } });
         }
 
         public void ConfigureServices(IDotvvmServiceCollection options)
@@ -88,6 +91,7 @@ namespace TestSamples
                 {
                     config.AttributeErrorHandlingMode = ErrorHandlingMode.LogAndIgnore;
                     config.HtmlTagErrorHandlingMode = ErrorHandlingMode.LogAndIgnore;
+                    config.StyleRemoveForbiddenImportant = true;
                 });
             options.AddDefaultTempStorages("temp");
         }

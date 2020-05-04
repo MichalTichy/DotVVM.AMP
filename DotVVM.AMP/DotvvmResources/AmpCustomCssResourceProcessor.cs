@@ -1,4 +1,5 @@
-﻿using DotVVM.Framework.ResourceManagement;
+﻿using System;
+using DotVVM.Framework.ResourceManagement;
 using System.Collections.Generic;
 using DotVVM.AMP.Validator;
 
@@ -6,32 +7,30 @@ namespace DotVVM.AMP.DotvvmResources
 {
     public class AmpCustomCssResourceProcessor : IResourceProcessor
     {
-        private readonly IAmpStylesheetResourceCollection ampStylesheetResourceCollection;
-        private readonly DotvvmResourceRepository _resources;
-        private HashSet<string> ReturnedResources = new HashSet<string>();
+        private readonly Func<IAmpStylesheetResourceCollection> ampStylesheetResourceCollectionFactory;
 
-        public AmpCustomCssResourceProcessor(IAmpStylesheetResourceCollection ampStylesheetResourceCollection,
-            DotvvmResourceRepository resources)
+        public AmpCustomCssResourceProcessor(Func<IAmpStylesheetResourceCollection> ampStylesheetResourceCollectionFactory)
         {
-            this.ampStylesheetResourceCollection = ampStylesheetResourceCollection;
-            _resources = resources;
+            this.ampStylesheetResourceCollectionFactory = ampStylesheetResourceCollectionFactory;
         }
 
         public IEnumerable<NamedResource> Process(IEnumerable<NamedResource> source)
         {
-            var mergedResource = new AmpCustomStylesheetResource(ampStylesheetResourceCollection);
-            var mergedKeyFrameResource = new AmpKeyframesStylesheetResource(ampStylesheetResourceCollection);
+            var stylesheetResourceCollection = ampStylesheetResourceCollectionFactory();
+            var mergedResource = new AmpCustomStylesheetResource(stylesheetResourceCollection);
+            var mergedKeyFrameResource = new AmpKeyframesStylesheetResource(stylesheetResourceCollection);
 
+            
             foreach (var namedResource in source)
             {
-                foreach (var namedResource1 in ProcessNamedResource(namedResource))
+                foreach (var namedResource1 in ProcessNamedResource(namedResource,stylesheetResourceCollection))
                     yield return namedResource1;
             }
             yield return new NamedResource("AmpCustomCss",mergedResource);
             yield return new NamedResource("AmpKeyframes", mergedKeyFrameResource);
         }
 
-        private IEnumerable<NamedResource> ProcessNamedResource(NamedResource namedResource)
+        private IEnumerable<NamedResource> ProcessNamedResource(NamedResource namedResource, IAmpStylesheetResourceCollection ampStylesheetResourceCollection)
         {
             var resource = namedResource.Resource;
 
@@ -47,23 +46,8 @@ namespace DotVVM.AMP.DotvvmResources
                 isMerged = true;
             }
 
-            if (isMerged)
+            if (!isMerged)
             {
-                foreach (var dependencyName in namedResource.Resource.Dependencies)
-                {
-                    var dependency = _resources.FindNamedResource(dependencyName);
-                    if (dependency != null && !ReturnedResources.Contains(dependencyName))
-                    {
-                        foreach (var dependedResource in ProcessNamedResource(dependency))
-                        {
-                            yield return dependedResource;
-                        }
-                    }
-                }
-            }
-            else if (!ReturnedResources.Contains(namedResource.Name))
-            {
-                ReturnedResources.Add(namedResource.Name);
                 yield return namedResource;
             }
         }

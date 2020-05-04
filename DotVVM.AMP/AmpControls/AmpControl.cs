@@ -2,9 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DotVVM.AMP.Config;
 using DotVVM.AMP.Enums;
 using DotVVM.AMP.Validator;
 using DotVVM.Framework.Binding;
+using DotVVM.Framework.Binding.Expressions;
 using DotVVM.Framework.Controls;
 using DotVVM.Framework.Hosting;
 
@@ -55,17 +57,29 @@ namespace DotVVM.AMP.AmpControls
 
         public string Height
         {
-            get { return (string)GetValue(HeightProperty); }
-            set { SetValue(HeightProperty, value); }
+            get { return GetPropertyValueOrAttribute(HeightProperty, "height"); }
+            set { SetValue(HeightProperty, value); Attributes.Remove("height"); }
         }
         public static readonly DotvvmProperty HeightProperty
             = DotvvmProperty.Register<string, AmpControl>(c => c.Height, null);
 
         public string Width
         {
-            get { return (string)GetValue(WidthProperty); }
-            set { SetValue(WidthProperty, value); }
+            get { return GetPropertyValueOrAttribute(WidthProperty, "width"); }
+            set { SetValue(WidthProperty, value); Attributes.Remove("width"); }
         }
+
+        public DotvvmAmpConfiguration AmpConfiguration { get; set; }
+        protected string GetPropertyValueOrAttribute(DotvvmProperty property, string attributeName)
+        {
+            if (IsPropertySet(property))
+            {
+                return GetValue<string>(property);
+            }
+            
+            return GetAttribute(attributeName);
+        }
+
         public static readonly DotvvmProperty WidthProperty
             = DotvvmProperty.Register<string, AmpControl>(c => c.Width, null);
 
@@ -79,7 +93,6 @@ namespace DotVVM.AMP.AmpControls
         protected override void OnLoad(IDotvvmRequestContext context)
         {
             base.OnLoad(context);
-            LoadPropertiesFromAttributes();
             Validate();
         }
 
@@ -159,27 +172,19 @@ namespace DotVVM.AMP.AmpControls
                 writer.AddAttribute(attributeName, attributeValue);
             }
         }
-
-        protected virtual void LoadPropertiesFromAttributes()
-        {
-            TransferAttribute("height",nameof(Height),HeightProperty);
-            TransferAttribute("width",nameof(Width),WidthProperty);
-        }
-
-
-        protected void TransferAttribute(string attributeName, string propertyName, DotvvmProperty destination)
+        
+        protected string GetAttribute(string attributeName)
         {
             if (Attributes.ContainsKey(attributeName))
             {
-                if (!string.IsNullOrWhiteSpace(GetValue<string>(destination)))
+                if (Attributes[attributeName] is IStaticValueBinding binding)
                 {
-                    throw new AmpException(
-                        $"Cannot have both attribute {attributeName} property {propertyName} set at the same time!");
+                    return binding.Evaluate(this)?.ToString();
                 }
-
-                destination.SetValue(this, Attributes[attributeName]);
-                Attributes.Remove(attributeName);
+                return (string) Attributes[attributeName];
             }
+
+            return null;
         }
     }
 

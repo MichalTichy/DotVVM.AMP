@@ -5,6 +5,7 @@ using System.Net;
 using DotVVM.AMP.ExternalResourceManager;
 using DotVVM.AMP.Validator;
 using DotVVM.Framework.Hosting;
+using ExCSS;
 
 namespace DotVVM.AMP.Config
 {
@@ -21,20 +22,7 @@ namespace DotVVM.AMP.Config
             try
             {
 
-                bool isAbsolute = Uri.IsWellFormedUriString(location, UriKind.Absolute);
-                Uri loc;
-                if (isAbsolute)
-                {
-                    loc = new Uri(location);
-                }
-                else
-                {
-                    var request = context.Request;
-                    var basePath = request.Url.GetLeftPart(UriPartial.Authority);
-                    loc = new Uri(basePath + (request.PathBase.HasValue() ? request.PathBase.Value : string.Empty) + location.Replace("~", ""));
-                }
-
-                using (var response = WebRequest.Create(loc).GetResponse().GetResponseStream())
+                using (var response = WebRequest.Create(new Uri(location)).GetResponse().GetResponseStream())
                 {
                     var image = Image.FromStream(response);
                     return new ExternalResourceMetatada()
@@ -43,7 +31,6 @@ namespace DotVVM.AMP.Config
                         Height = image.Height
                     };
                 }
-
             }
             catch (Exception e)
             {

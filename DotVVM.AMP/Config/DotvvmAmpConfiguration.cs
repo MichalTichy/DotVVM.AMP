@@ -26,6 +26,8 @@ namespace DotVVM.AMP.Config
         public IAmpExternalResourceMetadataCache AmpExternalResourceMetadataCache { get; set; }
         public bool TryToDetermineExternalResourceDimensions { get; set; } = true;
         public static string AmpJsUrl { get; set; } = @"https://cdn.ampproject.org/v0.js";
+        public bool StyleRemoveForbiddenImportant { get; set; }
+
         public static uint MaximumAmpCustomStylesheetSize = 75000;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using DotVVM.AMP.Config;
+using DotVVM.Framework.Binding.Expressions;
 using DotVVM.Framework.Controls;
 using DotVVM.Framework.Hosting;
 using Microsoft.CodeAnalysis;
@@ -37,8 +38,8 @@ namespace DotVVM.AMP.ControlTransforms.Transforms
                 parent.Children.Remove(currentControl);
                 parent.Children.Insert(childIndex, newControl);
             }
-
             currentControl.Children.Clear();
+            currentControl.Parent = newControl.Parent;
             newControl.Children.Add(children);
         }
 
