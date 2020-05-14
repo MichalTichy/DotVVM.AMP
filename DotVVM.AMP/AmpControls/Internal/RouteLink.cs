@@ -61,7 +61,7 @@ namespace DotVVM.AMP.AmpControls.Internal
         {
             originalRouteLink.Parent = this.Parent;
 
-            RouteName = Config.AmpRouteManager.GetAmpPageRouteName(originalRouteLink.RouteName);
+            RouteName = Config.RouteManager.GetAmpPageRouteName(originalRouteLink.RouteName);
             var url = RouteLinkHelpers.EvaluateRouteUrl(RouteName,originalRouteLink,context);
 
             if (!Enabled)

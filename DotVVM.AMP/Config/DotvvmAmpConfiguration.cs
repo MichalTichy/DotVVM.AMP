@@ -8,22 +8,23 @@ namespace DotVVM.AMP.Config
 {
     public class DotvvmAmpConfiguration
     {
-        public DotvvmAmpConfiguration(IAmpControlTransformsRegistry registry, IAmpRouteManager ampRouteManager, IAmpExternalResourceMetadataCache ampExternalResourceMetadataCache)
+        public DotvvmAmpConfiguration(IAmpControlTransformsRegistry registry, IAmpRouteManager routeManager, IAmpExternalResourceMetadataCache externalResourceMetadataCache)
         {
             ControlTransforms = registry;
-            AmpRouteManager = ampRouteManager;
-            AmpExternalResourceMetadataCache = ampExternalResourceMetadataCache;
+            RouteManager = routeManager;
+            ExternalResourceMetadataCache = externalResourceMetadataCache;
         }
 
-        public ErrorHandlingMode AttributeErrorHandlingMode { get; set; }
-        public ErrorHandlingMode KnockoutErrorHandlingMode { get; set; }
-        public ErrorHandlingMode HtmlTagErrorHandlingMode { get; set; }
-        public ErrorHandlingMode StylesErrorHandlingMode { get; set; }
+        public IAmpControlTransformsRegistry ControlTransforms { get; set; }
+        public IAmpRouteManager RouteManager { get; set; }
+        public IAmpExternalResourceMetadataCache ExternalResourceMetadataCache { get; set; }
+
+        public ErrorHandlingMode AttributeHandlingMode { get; set; }
+        public ErrorHandlingMode KnockoutHandlingMode { get; set; }
+        public ErrorHandlingMode HtmlTagHandlingMode { get; set; }
+        public ErrorHandlingMode StylesHandlingMode { get; set; }
         public ErrorHandlingMode UnsupportedControlPropertiesHandlingMode { get; set; }
         
-        public IAmpControlTransformsRegistry ControlTransforms { get; set; }
-        public IAmpRouteManager AmpRouteManager { get; set; }
-        public IAmpExternalResourceMetadataCache AmpExternalResourceMetadataCache { get; set; }
         public bool TryToDetermineExternalResourceDimensions { get; set; } = true;
         public static string AmpJsUrl { get; set; } = @"https://cdn.ampproject.org/v0.js";
         public bool StyleRemoveForbiddenImportant { get; set; }

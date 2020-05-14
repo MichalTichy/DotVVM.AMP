@@ -1,15 +1,14 @@
-﻿using System.Linq;
-using DotVVM.AMP.ControlTransforms;
+﻿using DotVVM.AMP.ControlTransforms;
 using DotVVM.Framework.Controls;
 using DotVVM.Framework.Hosting;
 
 namespace DotVVM.AMP.AmpControls.Internal
 {
-    public class AmpRepeater : Repeater
+    public class AmpGridView : GridView
     {
         private readonly IAmpControlTransformsRegistry transformsRegistry;
 
-        public AmpRepeater(IAmpControlTransformsRegistry ampControlTransformsRegistry)
+        public AmpGridView(IAmpControlTransformsRegistry ampControlTransformsRegistry)
         {
             this.transformsRegistry = ampControlTransformsRegistry;
         }

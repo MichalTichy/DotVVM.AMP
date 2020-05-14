@@ -9,7 +9,7 @@ namespace DotVVM.AMP.ViewBuilder
     public class AmpViewBuilder : IAmpDotvvmViewBuilder
     {
         private readonly IAmpControlTransformsRegistry transformsRegistry;
-        protected IDotvvmViewBuilder ViewBuilder { get; private set; }
+        protected IDotvvmViewBuilder ViewBuilder { get; private set; } 
 
         public AmpViewBuilder(IDotvvmViewBuilder viewBuilder, IAmpControlTransformsRegistry transformsRegistry)
         {

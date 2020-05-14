@@ -17,7 +17,7 @@ namespace DotVVM.AMP.Extensions
                                         Func<IServiceProvider, IDotvvmPresenter> dotvvmPagePresenterFactory = null, Func<IServiceProvider, IAmpPresenter> ampPagePresenterFactory = null)
         {
 
-            var ampRouteManager = GetAmpConfiguration(dotvvmConfiguration).AmpRouteManager;
+            var ampRouteManager = GetAmpConfiguration(dotvvmConfiguration).RouteManager;
 
             var ampPageRoute = ampRouteManager.BuildAmpRouteName(routeName);
 
@@ -32,7 +32,7 @@ namespace DotVVM.AMP.Extensions
 
         public static void AddWithAmp(this DotvvmRouteTable routeTable, string routeName, string url, DotvvmConfiguration dotvvmConfiguration, Func<IServiceProvider, IDotvvmPresenter> dotvvmPagePresenterFactory = null, Func<IServiceProvider, IAmpPresenter> ampPagePresenterFactory = null, object dotvvmPageDefaultValues = null, object ampPageDefaultValues = null)
         {
-            var ampRouteManager = GetAmpConfiguration(dotvvmConfiguration).AmpRouteManager;
+            var ampRouteManager = GetAmpConfiguration(dotvvmConfiguration).RouteManager;
 
             var ampPageRoute = ampRouteManager.BuildAmpRouteName(routeName);
 
@@ -49,7 +49,7 @@ namespace DotVVM.AMP.Extensions
             if (!typeof(IAmpPresenter).IsAssignableFrom(ampPagePresenterType))
                 throw new ArgumentException($"ampPagePresenterType has to inherit from {nameof(IAmpPresenter)}.", nameof(ampPagePresenterType));
 
-            var ampRouteManager = GetAmpConfiguration(dotvvmConfiguration).AmpRouteManager;
+            var ampRouteManager = GetAmpConfiguration(dotvvmConfiguration).RouteManager;
 
             var ampPageRoute = ampRouteManager.BuildAmpRouteName(routeName);
 

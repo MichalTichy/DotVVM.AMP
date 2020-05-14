@@ -23,15 +23,16 @@ namespace DotVVM.AMP.Extensions
             services.AddTransient<TService, TImplementation>();
             services.AddSingleton<Func<TService>>(x => () => x.GetService<TService>());
         }
-        public static void AddDotvvmAmpSupport(this IDotvvmServiceCollection serviceCollection, Action<DotvvmAmpConfiguration> modifyConfiguration = null)
+        public static void AddDotvvmAmpSupport(this IDotvvmServiceCollection serviceCollection, Action<DotvvmAmpConfiguration,ILogger> modifyConfiguration = null)
         {
             serviceCollection.Services.AddSingleton<IAmpPresenter, DotvvmAmpPresenter>();
+            serviceCollection.Services.AddFactory<IAmpStylesheetResourceCollection, AmpStylesheetResourceCollection>();
+
             serviceCollection.Services.AddSingleton<IAmpOutputRenderer, AmpOutputRenderer>();
             serviceCollection.Services.AddSingleton<IAmpDotvvmViewBuilder, AmpViewBuilder>();
             serviceCollection.Services.AddSingleton<IAmpControlTransformsRegistry, AmpControlTransformsRegistry>();
             serviceCollection.Services.AddSingleton<IAmpValidator, AmpValidator>();
             serviceCollection.Services.AddSingleton<IAmpRouteManager, AmpRouteManager>();
-            serviceCollection.Services.AddFactory<IAmpStylesheetResourceCollection, AmpStylesheetResourceCollection>();
             serviceCollection.Services.AddSingleton<IAmpExternalResourceMetadataCache, AmpExternalResourceMetadataCache>();
             
             serviceCollection.Services.AddSingleton<DotvvmAmpConfiguration>(provider =>
@@ -42,7 +43,7 @@ namespace DotVVM.AMP.Extensions
                 var externalResourceMetadataCache = provider.GetService<IAmpExternalResourceMetadataCache>();
                 var config = new DotvvmAmpConfiguration(registry, routeManager,externalResourceMetadataCache);
                 RegisterTransforms(config, logger);
-                modifyConfiguration?.Invoke(config);
+                modifyConfiguration?.Invoke(config,logger);
                 return config;
             });
         }

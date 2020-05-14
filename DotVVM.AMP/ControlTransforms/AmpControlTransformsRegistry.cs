@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using DotVVM.AMP.ControlTransforms.Transforms;
 using DotVVM.Framework.Controls;
+using DotVVM.Framework.Hosting;
 
 namespace DotVVM.AMP.ControlTransforms
 {
@@ -26,6 +28,14 @@ namespace DotVVM.AMP.ControlTransforms
             }
 
             return null;
+        }
+
+        public void ApplyTransforms(DotvvmControl  root,IDotvvmRequestContext context)
+        {
+            foreach (var control in root.GetAllDescendants().ToList())
+            {
+                GetTransform(control)?.Transform(control, context);
+            }
         }
     }
 }

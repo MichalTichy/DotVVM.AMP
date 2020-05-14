@@ -2,7 +2,6 @@
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using DotVVM.AMP.Config;
 using DotVVM.AMP.Validator;
 using DotVVM.AMP.Writer;
 using DotVVM.Framework.Controls;
@@ -15,13 +14,11 @@ namespace DotVVM.AMP.Renderers
 {
     public class AmpOutputRenderer : DefaultOutputRenderer, IAmpOutputRenderer
     {
-        private readonly DotvvmAmpConfiguration configuration;
         private readonly IAmpValidator validator;
         private readonly ILogger logger;
 
-        public AmpOutputRenderer(DotvvmAmpConfiguration configuration, IAmpValidator validator,ILogger logger=null)
+        public AmpOutputRenderer(IAmpValidator validator,ILogger logger=null)
         {
-            this.configuration = configuration;
             this.validator = validator;
             this.logger = logger;
         }
@@ -40,7 +37,7 @@ namespace DotVVM.AMP.Renderers
 
         protected virtual AmpHtmlWriter CreateAmpHtmlWriter(IDotvvmRequestContext context, StreamWriter textWriter)
         {
-            return new AmpHtmlWriter(configuration, textWriter, context, validator,logger);
+            return new AmpHtmlWriter(textWriter, context, validator,logger);
         }
 
         public override async Task WriteViewModelResponse(IDotvvmRequestContext context, DotvvmView view)

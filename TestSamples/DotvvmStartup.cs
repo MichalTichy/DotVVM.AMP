@@ -87,10 +87,10 @@ namespace TestSamples
 
         public void ConfigureServices(IDotvvmServiceCollection options)
         {
-            options.AddDotvvmAmpSupport(config =>
+            options.AddDotvvmAmpSupport((config,_) =>
                 {
-                    config.AttributeErrorHandlingMode = ErrorHandlingMode.LogAndIgnore;
-                    config.HtmlTagErrorHandlingMode = ErrorHandlingMode.LogAndIgnore;
+                    config.AttributeHandlingMode = ErrorHandlingMode.LogAndIgnore;
+                    config.HtmlTagHandlingMode = ErrorHandlingMode.LogAndIgnore;
                     config.StyleRemoveForbiddenImportant = true;
                 });
             options.AddDefaultTempStorages("temp");

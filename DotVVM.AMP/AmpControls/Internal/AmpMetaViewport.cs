@@ -36,7 +36,7 @@ namespace DotVVM.AMP.AmpControls.Internal
             var requiredWidth = "device-width";
             if (ViewPortProperties.TryGetValue("width", out var width) && width != requiredWidth)
             {
-                switch (ampConfiguration.AttributeErrorHandlingMode)
+                switch (ampConfiguration.AttributeHandlingMode)
                 {
                     case ErrorHandlingMode.Throw:
                         throw new AmpException($"Meta viewport must have width={requiredWidth}");
@@ -57,7 +57,7 @@ namespace DotVVM.AMP.AmpControls.Internal
             var requiredMinScale = "1";
             if (ViewPortProperties.TryGetValue("minimum-scale", out var minScale) && minScale != requiredMinScale)
             {
-                switch (ampConfiguration.AttributeErrorHandlingMode)
+                switch (ampConfiguration.AttributeHandlingMode)
                 {
                     case ErrorHandlingMode.Throw:
                         throw new AmpException($"Meta viewport must have minimum-scale={requiredMinScale}");

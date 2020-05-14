@@ -68,7 +68,7 @@ namespace DotVVM.AMP.Validator
 
             if (!string.IsNullOrWhiteSpace(error))
             {
-                switch (configuration.HtmlTagErrorHandlingMode)
+                switch (configuration.HtmlTagHandlingMode)
                 {
                     case ErrorHandlingMode.Throw:
                         throw new AmpException(error);
@@ -77,7 +77,7 @@ namespace DotVVM.AMP.Validator
                         return false;
                     default:
                         throw new ArgumentOutOfRangeException(
-                            $"Unsuported {nameof(configuration.HtmlTagErrorHandlingMode)}");
+                            $"Unsuported {nameof(configuration.HtmlTagHandlingMode)}");
                 }
             }
 
@@ -98,7 +98,7 @@ namespace DotVVM.AMP.Validator
 
             if (!isValid)
             {
-                switch (configuration.HtmlTagErrorHandlingMode)
+                switch (configuration.HtmlTagHandlingMode)
                 {
                     case ErrorHandlingMode.Throw:
                         throw new AmpException(errorMessage);
@@ -107,7 +107,7 @@ namespace DotVVM.AMP.Validator
                         return false;
                     default:
                         throw new ArgumentOutOfRangeException(
-                            $"Unsuported {nameof(configuration.HtmlTagErrorHandlingMode)}");
+                            $"Unsuported {nameof(configuration.HtmlTagHandlingMode)}");
                 }
             }
 
@@ -149,7 +149,7 @@ namespace DotVVM.AMP.Validator
 
             if (!isRestrictedTagValid)
             {
-                switch (configuration.HtmlTagErrorHandlingMode)
+                switch (configuration.HtmlTagHandlingMode)
                 {
                     case ErrorHandlingMode.Throw:
                         throw new AmpException(restrictedTagErrorMessage);
@@ -158,7 +158,7 @@ namespace DotVVM.AMP.Validator
                         return false;
                     default:
                         throw new ArgumentOutOfRangeException(
-                            $"Unsuported {nameof(configuration.HtmlTagErrorHandlingMode)}");
+                            $"Unsuported {nameof(configuration.HtmlTagHandlingMode)}");
                 }
             }
 
@@ -170,7 +170,7 @@ namespace DotVVM.AMP.Validator
             if (ForbiddenTags.Contains(tagName.ToLower()))
             {
                 var errorMessage = $"Html tag {tagName} is not allowed!";
-                switch (configuration.HtmlTagErrorHandlingMode)
+                switch (configuration.HtmlTagHandlingMode)
                 {
                     case ErrorHandlingMode.Throw:
                         throw new AmpException(errorMessage);
@@ -179,7 +179,7 @@ namespace DotVVM.AMP.Validator
                         return false;
                     default:
                         throw new ArgumentOutOfRangeException(
-                            $"Unsuported {nameof(configuration.HtmlTagErrorHandlingMode)}");
+                            $"Unsuported {nameof(configuration.HtmlTagHandlingMode)}");
                 }
             }
 
@@ -199,7 +199,7 @@ namespace DotVVM.AMP.Validator
 
             var exceptionMessage = $"Attribute {attributeName} is not valid {(!isIdAttributeValid? $"with value {attributeValue}" : "")}!";
             
-            switch (configuration.AttributeErrorHandlingMode)
+            switch (configuration.AttributeHandlingMode)
             {
                 case ErrorHandlingMode.LogAndIgnore:
                     logger?.LogError(exceptionMessage);
@@ -207,7 +207,7 @@ namespace DotVVM.AMP.Validator
                 case ErrorHandlingMode.Throw:
                     throw new AmpException(exceptionMessage);
                 default:
-                    throw new ArgumentOutOfRangeException($"Unsuported {nameof(configuration.AttributeErrorHandlingMode)}");
+                    throw new ArgumentOutOfRangeException($"Unsuported {nameof(configuration.AttributeHandlingMode)}");
             }
 
         }
@@ -249,7 +249,7 @@ namespace DotVVM.AMP.Validator
 
             if (!allValid)
             {
-                switch (configuration.StylesErrorHandlingMode)
+                switch (configuration.StylesHandlingMode)
                 {
                     case ErrorHandlingMode.Throw:
                         throw new AmpException(string.Join("\n",errors));
@@ -285,7 +285,7 @@ namespace DotVVM.AMP.Validator
             
             var errorMessage = $"Control tried to use knockout dataBind {name}, which is unsupported during amp rendering.";
 
-            switch (configuration.KnockoutErrorHandlingMode)
+            switch (configuration.KnockoutHandlingMode)
             {
                 case ErrorHandlingMode.Throw:
                     throw new AmpException(errorMessage);

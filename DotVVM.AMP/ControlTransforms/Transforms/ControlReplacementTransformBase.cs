@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace DotVVM.AMP.ControlTransforms.Transforms
 {
-    public abstract class ControlReplacementTransformBase : ControlTransformBase
+    public abstract class ControlReplacementTransformBase : ControlValidatorTransformBase<DotvvmControl>
     {
 
         public ControlReplacementTransformBase(DotvvmAmpConfiguration ampConfiguration, ILogger logger = null) : base(ampConfiguration,logger)

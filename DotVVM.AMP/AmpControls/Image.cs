@@ -87,7 +87,7 @@ namespace DotVVM.AMP.AmpControls
                 {
                     var src = GetSrc(this);
                     var metadata =
-                        AmpConfiguration.AmpExternalResourceMetadataCache.GetResourceMetadata(src, context.HttpContext);
+                        AmpConfiguration.ExternalResourceMetadataCache.GetResourceMetadata(src, context.HttpContext);
                     Height = $"{metadata.Height}px";
                     Width = $"{metadata.Width}px";
                 }

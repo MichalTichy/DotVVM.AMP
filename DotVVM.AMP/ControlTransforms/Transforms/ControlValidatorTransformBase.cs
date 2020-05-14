@@ -47,6 +47,9 @@ namespace DotVVM.AMP.ControlTransforms.Transforms
             return control;
         }
 
-        protected abstract void ValidateControl(TControl control, IDotvvmRequestContext context);
+        protected virtual void ValidateControl(TControl control, IDotvvmRequestContext context)
+        {
+            
+        }
     }
 }

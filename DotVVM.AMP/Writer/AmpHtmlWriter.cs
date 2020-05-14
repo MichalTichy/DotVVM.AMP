@@ -15,16 +15,14 @@ namespace DotVVM.AMP.Writer
     public class AmpHtmlWriter : IAmpHtmlWriter
     {
         protected IHtmlWriter writer;
-        protected readonly DotvvmAmpConfiguration AmpConfiguration;
         protected readonly IAmpValidator validator;
         protected readonly ILogger Logger;
 
         protected Dictionary<string, string> Attributes = new Dictionary<string, string>();
         protected bool StartTagSkipped = false;
-        public AmpHtmlWriter(DotvvmAmpConfiguration configuration, StreamWriter textWriter, IDotvvmRequestContext context, IAmpValidator validator, ILogger logger)
+        public AmpHtmlWriter(StreamWriter textWriter, IDotvvmRequestContext context, IAmpValidator validator, ILogger logger)
         {
             writer = new HtmlWriter(textWriter, context);
-            this.AmpConfiguration = configuration;
             this.validator = validator;
             Logger = logger;
         }
