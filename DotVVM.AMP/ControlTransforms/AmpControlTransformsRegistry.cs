@@ -32,7 +32,12 @@ namespace DotVVM.AMP.ControlTransforms
 
         public void ApplyTransforms(DotvvmControl  root,IDotvvmRequestContext context)
         {
-            foreach (var control in root.GetAllDescendants().ToList())
+            ApplyTransforms(root.GetAllDescendants().ToList(), context);
+        }
+
+        public void ApplyTransforms(List<DotvvmControl> allControls, IDotvvmRequestContext context)
+        {
+            foreach (var control in allControls)
             {
                 GetTransform(control)?.Transform(control, context);
             }

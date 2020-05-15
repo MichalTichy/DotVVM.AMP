@@ -5,20 +5,22 @@ using DotVVM.Framework.Routing;
 
 namespace DotVVM.AMP.AmpControls.Internal
 {
-    public class AmpLinkToFullPage : HtmlGenericControl, IAmpControl
+    public class AmpLinkToAnotherVersion : HtmlGenericControl, IAmpControl
     {
         private readonly RouteBase ampPageRoute;
         private readonly RouteBase fullPageRoute;
+        private readonly bool targetIsAmp;
 
-        public AmpLinkToFullPage(RouteBase ampPageRoute, RouteBase fullPageRoute) : base("link")
+        public AmpLinkToAnotherVersion(RouteBase ampPageRoute, RouteBase fullPageRoute, bool targetIsAmp=false) : base("link")
         {
             this.ampPageRoute = ampPageRoute;
             this.fullPageRoute = fullPageRoute;
+            this.targetIsAmp = targetIsAmp;
         }
 
         protected override void AddAttributesToRender(IHtmlWriter writer, IDotvvmRequestContext context)
         {
-            writer.AddAttribute("rel", "canonical");
+            writer.AddAttribute("rel", targetIsAmp ? "amphtml" :"canonical");
             var ampPageHasDefaults = ampPageRoute.DefaultValues.Any();
             var fullPageHasDefaults = fullPageRoute.DefaultValues.Any();
             bool isDefault;
@@ -34,10 +36,24 @@ namespace DotVVM.AMP.AmpControls.Internal
                 isDefault = urlWithDefault == urlWithCurrent;
 
             }
-            var urlFullPage= isDefault ?
-                fullPageRoute.BuildUrl(fullPageRoute.DefaultValues) :
-                fullPageRoute.BuildUrl(context.Parameters);
-            writer.AddAttribute("href", urlFullPage);
+            string pageUrl;
+
+            if (targetIsAmp)
+            {
+
+                pageUrl = isDefault ?
+                    ampPageRoute.BuildUrl(ampPageRoute.DefaultValues) :
+                    ampPageRoute.BuildUrl(context.Parameters);
+            }
+            else
+            {
+
+                pageUrl = isDefault ?
+                    fullPageRoute.BuildUrl(fullPageRoute.DefaultValues) :
+                    fullPageRoute.BuildUrl(context.Parameters);
+            }
+
+            writer.AddAttribute("href", pageUrl);
             base.AddAttributesToRender(writer, context);
         }
     }

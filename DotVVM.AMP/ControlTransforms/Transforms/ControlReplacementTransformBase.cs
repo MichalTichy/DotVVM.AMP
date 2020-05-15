@@ -18,9 +18,13 @@ namespace DotVVM.AMP.ControlTransforms.Transforms
 
         protected override DotvvmControl TransformCore(DotvvmControl control, IDotvvmRequestContext context)
         {
-            var newControl = CreateReplacementControl(control);
-            TransferControlProperties(control, newControl);
-            ReplaceControl(control, newControl);
+            var transformed = base.TransformCore(control, context);
+            if (transformed == null)
+                return null;
+
+            var newControl = CreateReplacementControl(transformed);
+            TransferControlProperties(transformed, newControl);
+            ReplaceControl(transformed, newControl);
             return newControl;
         }
 

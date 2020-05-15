@@ -23,7 +23,14 @@ namespace DotVVM.AMP.Extensions
 
             if (ampPageDefaultValues==null) ampPageDefaultValues = dotVVMPageDefaultValues;
 
-            routeTable.Add(routeName, url, virtualPath, dotVVMPageDefaultValues, dotvvmPagePresenterFactory);
+            routeTable.Add(routeName, url, virtualPath, dotVVMPageDefaultValues, provider =>
+            {
+                IDotvvmPresenter dotvvmPresenter;
+
+                dotvvmPresenter = dotvvmPagePresenterFactory==null ? routeTable.GetDefaultPresenter(provider) : dotvvmPagePresenterFactory(provider);
+                return new DotvvmAmpLinkPresenter(dotvvmPresenter,ampRouteManager);
+            });
+
             routeTable.Add(ampPageRoute, ampRouteManager.BuildAmpUrl(url), virtualPath, ampPageDefaultValues, ampPagePresenterFactory ?? new Func<IServiceProvider, IDotvvmPresenter>(GetDefaultAmpPresenter));
 
             ampRouteManager.RegisterRoute(routeTable[ampPageRoute], routeTable[routeName]);
@@ -38,7 +45,27 @@ namespace DotVVM.AMP.Extensions
 
             if (ampPageDefaultValues == null) ampPageDefaultValues = dotvvmPageDefaultValues;
 
-            routeTable.Add(routeName, url, dotvvmPagePresenterFactory, dotvvmPageDefaultValues);
+            Func<IServiceProvider, IDotvvmPresenter> defaultPresenterFactory;
+
+            if (dotvvmPagePresenterFactory==null)
+            {
+                defaultPresenterFactory = provider =>
+                {
+                    var dotvvmPresenter = routeTable.GetDefaultPresenter(provider);
+                    return new DotvvmAmpLinkPresenter(dotvvmPresenter, ampRouteManager);
+                };
+            }
+            else
+            {
+
+                defaultPresenterFactory = provider =>
+                {
+                    var dotvvmPresenter = dotvvmPagePresenterFactory(provider);
+                    return new DotvvmAmpLinkPresenter(dotvvmPresenter, ampRouteManager);
+                };
+            }
+
+            routeTable.Add(routeName, url, defaultPresenterFactory, dotvvmPageDefaultValues);
             routeTable.Add(ampPageRoute, ampRouteManager.BuildAmpUrl(url), ampPagePresenterFactory ?? new Func<IServiceProvider, IDotvvmPresenter>(GetDefaultAmpPresenter), ampPageDefaultValues);
 
             ampRouteManager.RegisterRoute(routeTable[ampPageRoute], routeTable[routeName]);
@@ -55,7 +82,16 @@ namespace DotVVM.AMP.Extensions
 
             if (ampPageDefaultValues == null) ampPageDefaultValues = dotvvmPageDefaultValues;
 
-            routeTable.Add(routeName, url, dotvvmPagePresenterType, dotvvmPageDefaultValues);
+            Func<IServiceProvider, IDotvvmPresenter> presenterFactory = provider =>
+            {
+                if (!typeof(IDotvvmPresenter).IsAssignableFrom(dotvvmPagePresenterType))
+                    throw new ArgumentException("presenterType has to inherit from DotVVM.Framework.Hosting.IDotvvmPresenter.", nameof(dotvvmPagePresenterType));
+
+                var dotvvmPresenter = (IDotvvmPresenter)provider.GetService(dotvvmPagePresenterType);
+                return new DotvvmAmpLinkPresenter(dotvvmPresenter, ampRouteManager);
+            };
+            routeTable.Add(routeName, url, presenterFactory, dotvvmPageDefaultValues);
+
             routeTable.Add(ampPageRoute, ampRouteManager.BuildAmpUrl(url), ampPagePresenterType, ampPageDefaultValues);
 
             ampRouteManager.RegisterRoute(routeTable[ampPageRoute], routeTable[routeName]);

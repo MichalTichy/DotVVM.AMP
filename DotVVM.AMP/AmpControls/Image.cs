@@ -51,12 +51,6 @@ namespace DotVVM.AMP.AmpControls
         public static readonly DotvvmProperty   AttributionProperty
             = DotvvmProperty.Register<string, Image>(() => AttributionProperty, null);
 
-        protected override void Validate()
-        {
-            if (string.IsNullOrWhiteSpace(Src) && string.IsNullOrWhiteSpace(SrcSet))
-                throw new DotvvmControlException($"{nameof(Src)} and / or {nameof(SrcSet)} property must be set!");
-            base.Validate();
-        }
 
         protected override IEnumerable<AmpLayout> SupportedLayouts => new []{AmpLayout.fill,AmpLayout.fixedLayout,AmpLayout.fixedHeight,AmpLayout.flexItem,AmpLayout.intrinsic,AmpLayout.noDisplay,AmpLayout.responsive};
 
