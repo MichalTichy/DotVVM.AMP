@@ -42,6 +42,8 @@ namespace DotVVM.AMP.ControlTransforms.Transforms
                 var parts = prop.Split('=');
                 mataViewport.ViewPortProperties.Add(parts[0], parts[1]);
             }
+
+            RemoveControlFromTree(originalMetaViewport);
         }
 
         private void AddLinkToOriginalPage(DotvvmControl newControl, IDotvvmRequestContext context)
