@@ -125,7 +125,7 @@ namespace DotVVM.AMP.Validator
                                            attributes["type"].ToLower() ==
                                            "application/ld+json".Replace(" ", string.Empty) || attributes["type"].ToLower()== "application/json".Replace(" ", string.Empty)) ||
                                            (attributes.ContainsKey("src") &&
-                                            attributes["src"].ToLower() == DotvvmAmpConfiguration.AmpJsUrl);
+                                            attributes["src"].ToLower() == DotvvmAmpConfiguration.AmpJsUrl) || attributes["src"].ToLower().StartsWith(DotvvmAmpConfiguration.AmpCdnUrl);
                     restrictedTagErrorMessage =
                         $@"Html tag script is valid only with type set to application/ld+json or with src set to {DotvvmAmpConfiguration.AmpJsUrl}!";
                     break;

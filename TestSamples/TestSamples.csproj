@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="**/*.dothtml;**/*.dotmaster;**/*.dotcontrol" Exclude="obj/**/*.*;bin/**/*.*" CopyToPublishDirectory="Always" />
@@ -10,6 +11,9 @@
     <None Remove="dotvvm_serialized_config.json.tmp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="**/*.dothtml;**/*.dotmaster;**/*.dotcontrol" Exclude="obj/**/*.*;bin/**/*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="wwwroot\AmpPages\ContentPlaceHolder\ContentPlaceHolderPage.html" />
     <None Include="wwwroot\AmpPages\ContentPlaceHolder\ContentPlaceHolderPage_ContentTest.html" />
     <None Include="wwwroot\AmpPages\ContentPlaceHolder\DoubleContentPlaceHolderPage_ContentTest.html" />

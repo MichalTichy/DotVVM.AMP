@@ -27,6 +27,7 @@ namespace DotVVM.AMP.Config
         
         public bool TryToDetermineExternalResourceDimensions { get; set; } = true;
         public static string AmpJsUrl { get; set; } = @"https://cdn.ampproject.org/v0.js";
+        public static string AmpCdnUrl { get; set; } = @"https://cdn.ampproject.org/";
         public bool StyleRemoveForbiddenImportant { get; set; }
 
         public static uint MaximumAmpCustomStylesheetSize = 75000;

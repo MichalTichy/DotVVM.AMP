@@ -59,8 +59,6 @@ namespace TestSamples
             config.RouteTable.AddWithAmp("RepeaterNestedRepeater", "NestedRepeater", "Views/ControlSamples/Repeater/NestedRepeater.dothtml", config);
             config.RouteTable.AddWithAmp("RepeaterRepeaterWrapperTag", "RepeaterWrapperTag", "Views/ControlSamples/Repeater/RepeaterWrapperTag.dothtml", config);
             config.RouteTable.AddWithAmp("RepeaterSeparator", "Separator", "Views/ControlSamples/Repeater/Separator.dothtml", config);
-
-            config.RouteTable.AddWithAmp("ListboxSimple", "ListBoxSimple", "Views/ControlSamples/ListBox/ListBoxSimple.dothtml", config);
             
             config.RouteTable.AddWithAmp("img", "img", "Views/ControlSamples/Image/Simple.dothtml", config);
 
