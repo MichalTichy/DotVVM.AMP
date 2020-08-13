@@ -36,4 +36,15 @@
   <ItemGroup>
     <Folder Include="wwwroot\Images\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Update="wwwroot\Resources\styles.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Resources\styles2.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Resources\styles3.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>
