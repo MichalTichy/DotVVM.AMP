@@ -189,9 +189,8 @@ namespace DotVVM.AMP.Validator
         public virtual bool CheckAttribute(string attributeName, string attributeValue)
         {
             var normalizedAttr = attributeName.ToLower();
-            var isAttributeNameValid = !normalizedAttr.StartsWith("on") &&
-                          normalizedAttr != "xmlns" &&
-                          !normalizedAttr.StartsWith("xml:");
+            var isAttributeNameValid = normalizedAttr != "xmlns" &&
+                                       !normalizedAttr.StartsWith("xml:");
 
             var isIdAttributeValid= attributeName != "id" || !attributeValue.ToLower().StartsWith("amp-") && !attributeValue.ToLower().StartsWith("i-amp-");
             if (isAttributeNameValid && isIdAttributeValid)
