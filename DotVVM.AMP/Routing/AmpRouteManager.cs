@@ -51,7 +51,9 @@ namespace DotVVM.AMP.Routing
 
         public virtual string BuildAmpUrl(string dotvvmPageUrl)
         {
-            return $"amp/{dotvvmPageUrl}";
+            return string.IsNullOrWhiteSpace(dotvvmPageUrl) ?
+                "amp" : 
+                $"amp/{dotvvmPageUrl}";
         }
     }
 }
