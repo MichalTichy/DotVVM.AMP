@@ -57,7 +57,7 @@ namespace DotVVM.AMP.AmpControls
 
         public string Height
         {
-            get { return GetPropertyValueOrAttribute(HeightProperty, "height"); }
+            get { return GetPropertyValueOrLoadAttribute(HeightProperty, "height"); }
             set { SetValue(HeightProperty, value); Attributes.Remove("height"); }
         }
         public static readonly DotvvmProperty HeightProperty
@@ -65,19 +65,25 @@ namespace DotVVM.AMP.AmpControls
 
         public string Width
         {
-            get { return GetPropertyValueOrAttribute(WidthProperty, "width"); }
+            get { return GetPropertyValueOrLoadAttribute(WidthProperty, "width");}
             set { SetValue(WidthProperty, value); Attributes.Remove("width"); }
         }
 
         public DotvvmAmpConfiguration AmpConfiguration { get; set; }
-        protected string GetPropertyValueOrAttribute(DotvvmProperty property, string attributeName)
+        protected string GetPropertyValueOrLoadAttribute(DotvvmProperty property, string attributeName)
         {
             if (IsPropertySet(property))
             {
                 return GetValue<string>(property);
             }
-            
-            return GetAttribute(attributeName);
+
+            var attribute = GetAttribute(attributeName);
+            if (attribute!=null)
+            {
+                Attributes.Remove(attributeName);
+                SetValue(property,attribute);
+            }
+            return attribute;
         }
 
         public static readonly DotvvmProperty WidthProperty

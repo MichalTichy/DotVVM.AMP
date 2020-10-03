@@ -21,7 +21,7 @@ namespace DotVVM.AMP.AmpControls
 
         public string Src
         {
-            get { return GetPropertyValueOrAttribute(SrcProperty, "src"); }
+            get { return GetPropertyValueOrLoadAttribute(SrcProperty, "src"); }
             set { SetValue(SrcProperty, value); Attributes.Remove("src"); }
         }
 
@@ -31,7 +31,7 @@ namespace DotVVM.AMP.AmpControls
 
         public string SrcSet
         {
-            get { return GetPropertyValueOrAttribute(SrcSetProperty, "srcset"); }
+            get { return GetPropertyValueOrLoadAttribute(SrcSetProperty, "srcset"); }
             set { SetValue(SrcSetProperty, value); Attributes.Remove("srcset"); }
         }
 
@@ -40,7 +40,7 @@ namespace DotVVM.AMP.AmpControls
 
         public string Alt
         {
-            get { return GetPropertyValueOrAttribute(AltProperty, "alt"); }
+            get { return GetPropertyValueOrLoadAttribute(AltProperty, "alt"); }
             set { SetValue(AltProperty, value); Attributes.Remove("alt"); }
         }
 
@@ -67,6 +67,8 @@ namespace DotVVM.AMP.AmpControls
 
             base.AddAttributesToRender(writer, context);
         }
+
+       
 
         private void EnsureThatImageHasDimensions(IDotvvmRequestContext context)
         {
