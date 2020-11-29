@@ -10,7 +10,7 @@ Event if you page does not fit the abovementioned criteria, then you can use Dot
 
 # How to use
 Number of steps needed to use transform some of you DotVVM pages into AMP is small and they are easy to follow:
-1)	Add DotVVM.AMP nuget package into your application.
+1)	Add [DotVVM.AMP nuget package](https://www.nuget.org/packages/DotVVM.AMP) into your application.
 2)	Modify DotvvmStartup.cs
 a)	Call AddDotvvmAmpSupport on IDotvvmServiceCollection instance.
 In this method you can configure DotVVM.AMP. You can for example configure how invalid constructs are handled.
