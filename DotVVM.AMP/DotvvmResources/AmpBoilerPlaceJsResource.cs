@@ -7,11 +7,11 @@ namespace DotVVM.AMP.DotvvmResources
 {
     public class AmpBoilerPlaceJsResource : ScriptResource, IAmpAllowedResource
     {
-        public AmpBoilerPlaceJsResource()
+        public AmpBoilerPlaceJsResource() : base(new UrlResourceLocation(DotvvmAmpConfiguration.AmpJsUrl), false)
         {
-            Location = new UrlResourceLocation(DotvvmAmpConfiguration.AmpJsUrl);
             RenderPosition = ResourceRenderPosition.Head;
         }
+
 
         public override void RenderLink(IResourceLocation location, IHtmlWriter writer, IDotvvmRequestContext context, string resourceName)
         {

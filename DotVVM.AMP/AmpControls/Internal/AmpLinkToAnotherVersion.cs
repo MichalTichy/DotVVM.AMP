@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using DotVVM.AMP.Extensions;
 using DotVVM.Framework.Controls;
 using DotVVM.Framework.Hosting;
 using DotVVM.Framework.Routing;
@@ -53,7 +54,7 @@ namespace DotVVM.AMP.AmpControls.Internal
                     fullPageRoute.BuildUrl(context.Parameters);
             }
 
-            writer.AddAttribute("href", pageUrl);
+            writer.AddAttribute("href", context.HttpContext.ToAbsolutePath(pageUrl).AbsoluteUri);
             base.AddAttributesToRender(writer, context);
         }
     }

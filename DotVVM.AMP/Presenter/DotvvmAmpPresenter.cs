@@ -22,6 +22,7 @@ namespace DotVVM.AMP.Presenter
             this.ampStylesheetResourceCollectionFactory = ampStylesheetResourceCollectionFactory;
         }
 
+        
         public async Task ProcessRequest(IDotvvmRequestContext context)
         {
             context.ResourceManager.RegisterProcessor(GetCssBundlerProcessor());
