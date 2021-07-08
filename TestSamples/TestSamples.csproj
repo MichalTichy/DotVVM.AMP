@@ -27,7 +27,7 @@
     <None Include="wwwroot\AmpPages\RouteLink\RouteLinkUrlGen.html" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DotVVM.AspNetCore" Version="3.0.5" />
+    <PackageReference Include="DotVVM.AspNetCore" Version="3.1.0" />
 
   </ItemGroup>
   <ItemGroup>
